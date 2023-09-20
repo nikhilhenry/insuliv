@@ -3,15 +3,15 @@ import { StatusBar } from "expo-status-bar";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../App";
 
-const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
+const PostsScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   navigation,
 }) => {
   return (
     <View style={styles.container}>
-      <Text>Hello World!</Text>
+      <Text>Welcome to posts</Text>
       <Button
-        title="Go to Posts"
-        onPress={() => navigation.navigate("Posts")}
+        title="Go to Home"
+        onPress={() => navigation.navigate("Home")}
       ></Button>
       <StatusBar style="auto" />
     </View>
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default PostsScreen;
