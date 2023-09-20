@@ -40,14 +40,15 @@ const Posts = () => {
   });
 
   return (
-    <View>
+    <View style={styles.container}>
+      <Text className="text-blue-500">Posts!</Text>
       {!query.isSuccess ? (
         <Text>Failed to Fetch</Text>
       ) : (
         <FlatList
           data={query.data}
           renderItem={({ item }) => (
-            <Text style={styles.item}>{item.message}</Text>
+            <Text className="text-red-500">{item.message}</Text>
           )}
         />
       )}
