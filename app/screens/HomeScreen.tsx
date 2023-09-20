@@ -9,10 +9,6 @@ const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   return (
     <View style={styles.container}>
       <Text>Hello World!</Text>
-      <Button
-        title="Go to Posts"
-        onPress={() => navigation.navigate("Posts")}
-      ></Button>
       <StatusBar style="auto" />
     </View>
   );

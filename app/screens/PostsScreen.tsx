@@ -15,10 +15,6 @@ const PostsScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
       <QueryClientProvider client={queryClient}>
         <Text>Welcome to posts</Text>
         <Posts />
-        <Button
-          title="Go to Home"
-          onPress={() => navigation.navigate("Home")}
-        ></Button>
         <StatusBar style="auto" />
       </QueryClientProvider>
     </View>
