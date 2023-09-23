@@ -2,6 +2,8 @@ import express from "express";
 import { postRouter } from "./routes/post";
 import { imageRouter } from "./routes/image";
 
+import "dotenv/config";
+
 const app = express();
 
 app.use(express.json());
