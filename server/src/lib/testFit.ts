@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { getActivities } from "./googleFit";
+import { getActivities, getSteps } from "./googleFit";
 import { getAuthToken } from "./getAccessToken";
 
-console.log(await getActivities());
+console.log(await getSteps());

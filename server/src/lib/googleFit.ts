@@ -49,3 +49,35 @@ export const getActivities = async () => {
 
   return filteredData;
 };
+
+export const getSteps = async () => {
+  const result = await fitAPI.post("", {
+    aggregateBy: [
+      {
+        dataTypeName: "com.google.step_count.delta",
+        dataSourceId:
+          "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps",
+      },
+    ],
+    bucketByTime: {
+      durationMillis: 86400000,
+    },
+    startTimeMillis: startMillis,
+    endTimeMillis: endMillis,
+  });
+
+  const data = result.data.bucket;
+
+  const filteredData = data.map((item: any) => {
+    return {
+      startTime: item.startTimeMillis,
+      endTime: item.endTimeMillis,
+      steps:
+        item["dataset"][0]["point"].length > 0
+          ? Math.round(item["dataset"][0]["point"][0]["value"][0]["intVal"])
+          : 0,
+    };
+  });
+
+  return filteredData;
+};
