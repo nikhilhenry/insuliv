@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import { COLORS, Icons, FONT, SIZES } from "../../constants";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "./ActivityLogger.style";
+import type { RootStackParamList } from "../../App";
 import Icon from "react-native-vector-icons/Octicons";
 import DropDownPicker from "react-native-dropdown-picker";
-const ActivityLogger = () => {
+const ActivityLogger = ({ navigation }: { navigation: any }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("today");
   const [items, setItems] = useState([
@@ -12,6 +14,32 @@ const ActivityLogger = () => {
     { label: "week", value: "week" },
     { label: "month", value: "month" },
   ]);
+  const [openActivity, setOpenActivity] = useState(false);
+  const [activityvalue, setActivityvalue] = useState("");
+  const [itemsActivity, setItemsActivity] = useState([
+    {
+      label: "Exercise",
+      value: "Exercise",
+      icon: () => (
+        <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
+      ),
+    },
+    {
+      label: "Meal",
+      value: "Meal",
+      icon: () => (
+        <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
+      ),
+    },
+    {
+      label: "Pill",
+      value: "Pill",
+      icon: () => (
+        <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
+      ),
+    },
+  ]);
+
   return (
     <View style={{ flex: 1, gap: 10 }}>
       <Text style={{ fontWeight: "bold", color: COLORS.dark }}>
@@ -21,26 +49,25 @@ const ActivityLogger = () => {
         <View style={styles.topheader}>
           <DropDownPicker
             arrowIconStyle={{
-              marginRight: 10,
+              marginRight: 35,
               padding: 0,
             }}
             showTickIcon={true}
             containerStyle={{
               backgroundColor: "transparent",
-              width: 100,
+              width: 105,
             }}
             dropDownContainerStyle={{
               backgroundColor: COLORS.backGray,
               borderTopWidth: 0,
               borderColor: COLORS.lightGray,
               borderWidth: 2,
-
               marginLeft: -5,
             }}
             style={{
               backgroundColor: "transparent",
               borderWidth: 0,
-              width: 100,
+              width: 105,
               padding: 0,
               paddingHorizontal: 0,
             }}
@@ -54,22 +81,42 @@ const ActivityLogger = () => {
               console.log("Value changed to ", value);
             }}
           />
-
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: 5,
-              alignItems: "flex-end",
+          <DropDownPicker
+            ArrowUpIconComponent={({ style }) => (
+              <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
+            )}
+            ArrowDownIconComponent={({ style }) => (
+              <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
+            )}
+            showArrowIcon={true}
+            placeholder="Add Activity"
+            showTickIcon={false}
+            containerStyle={{
+              backgroundColor: "transparent",
+              width: 125,
+            }}
+            dropDownContainerStyle={{
+              backgroundColor: COLORS.backGray,
+              borderTopWidth: 0,
               borderColor: COLORS.lightGray,
               borderWidth: 2,
-              borderRadius: 5,
-              padding: 5,
             }}
-          >
-            <Text>add activity</Text>
-            <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
-          </TouchableOpacity>
+            style={{
+              backgroundColor: "transparent",
+              borderWidth: 0,
+              width: 125,
+            }}
+            open={openActivity}
+            value={activityvalue}
+            items={itemsActivity}
+            setOpen={setOpenActivity}
+            setValue={() => setActivityvalue("")}
+            onSelectItem={(item) => {
+              console.log("change page");
+              navigation.navigate(`${item.label}Adder`);
+            }}
+            setItems={setItemsActivity}
+          />
         </View>
         <View style={styles.bottomholder}></View>
       </View>

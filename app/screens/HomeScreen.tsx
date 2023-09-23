@@ -1,45 +1,16 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../App";
+import type { RootStackParamList } from "../scenes/Home";
 import { COLORS, SIZES } from "../constants";
 import { InfoCardContainer, ActivityLogger } from "../components";
 import Icon from "react-native-vector-icons/Fontisto";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useCallback } from "react";
-import setDefaultProps from "react-native-simple-default-props";
-SplashScreen.preventAutoHideAsync();
 
 const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   navigation,
 }) => {
-  const [fontsLoaded, fontError] = useFonts({
-    "Nunito-Light": require("../assets/fonts/Nunito-Light.ttf"),
-    "Nunito-Regular": require("../assets/fonts/Nunito-Regular.ttf"),
-    "Nunito-Medium": require("../assets/fonts/Nunito-Medium.ttf"),
-    "Nunito-SemiBold": require("../assets/fonts/Nunito-SemiBold.ttf"),
-    "Nunito-Bold": require("../assets/fonts/Nunito-Bold.ttf"),
-    "Nunito-ExtraBold": require("../assets/fonts/Nunito-ExtraBold.ttf"),
-    "Nunito-Black": require("../assets/fonts/Nunito-Black.ttf"),
-  });
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  } else {
-    const defaultText = {
-      style: [{ fontFamily: "Nunito-Regular" }],
-    };
-    setDefaultProps(Text, defaultText);
-  }
-
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <View style={styles.container}>
       <View
         style={{
           flexDirection: "row",
@@ -51,7 +22,7 @@ const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
           style={{
             fontSize: SIZES.xLarge,
             color: COLORS.darkL,
-            fontFamily: "Nunito-Bold",
+            fontWeight: "bold",
           }}
         >
           Hey User 👋,
@@ -61,7 +32,7 @@ const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
         </TouchableOpacity>
       </View>
       <InfoCardContainer />
-      <ActivityLogger />
+      <ActivityLogger navigation={navigation} />
       <StatusBar style="auto" />
     </View>
   );

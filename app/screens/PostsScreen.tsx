@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Button, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../App";
+import type { RootStackParamList } from "../scenes/Home";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -38,7 +38,7 @@ const Posts = () => {
   return (
     <View style={styles.container}>
       <Text className="text-blue-500">Posts!</Text>
-      {!query.isSuccess ? (
+      {/* {!query.isSuccess ? (
         <Text>Failed to Fetch</Text>
       ) : (
         <FlatList
@@ -47,7 +47,7 @@ const Posts = () => {
             <Text className="text-red-500">{item.message}</Text>
           )}
         />
-      )}
+      )} */}
     </View>
   );
 };
