@@ -33,5 +33,5 @@ imageRouter.post("/upload", upload.single("file"), async (req, res) => {
   });
   return res
     .status(200)
-    .send({ img_url: "http://localhost:3000/api/image/" + id });
+    .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
 });
