@@ -58,3 +58,10 @@ model BPMPerDay {
   recordedAt DateTime @default(now())
   value      Int
 }
+
+model CaloriesPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  value      Int
+}

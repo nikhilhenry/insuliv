@@ -24,14 +24,22 @@ activityRouter.get("/sync", async (req, res) => {
       data: processedActivites,
     });
 
+    const justDate = new Date().toISOString().split("T")[0];
+
+    // sync calories
+    const calories = activities.reduce((acc, curr) => acc + curr.calories, 0);
+    const savedCalories = await prisma.caloriesPerDay.upsert({
+      where: { date: justDate },
+      update: { value: { increment: calories } },
+      create: { date: justDate, value: calories },
+    });
+
     // sync steps
     const stepRecord = await getSteps();
     if (!stepRecord) {
       console.error("unable to fetch steps");
       return res.status(500).send("unable to fetch steps");
     }
-
-    const justDate = new Date().toISOString().split("T")[0];
     const savedSteps = await prisma.stepsPerDay.upsert({
       where: { date: justDate },
       update: { steps: stepRecord.steps },
