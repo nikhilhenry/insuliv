@@ -59,6 +59,7 @@ activityRouter.get("/sync", async (req, res) => {
     });
 
     saveLastSync();
+    console.log("synced successfully");
     return res.send({ message: "synced successfully" });
   } catch (error) {
     console.error(error);
