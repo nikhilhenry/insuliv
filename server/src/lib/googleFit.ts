@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { getAuthToken } from "./getAccessToken";
 import { activity_maps } from "./fitActivities";
-import { error } from "console";
 
 const fitAPI = axios.create({
   baseURL: "https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate",
@@ -72,7 +71,7 @@ export const getSteps = async () => {
         },
       ],
       bucketByTime: {
-        durationMillis: 86400000,
+        durationMillis: 86400000, // @ Subham will this get us today's steps also?
       },
       startTimeMillis: startMillis,
       endTimeMillis: endMillis,
@@ -82,8 +81,7 @@ export const getSteps = async () => {
 
     const filteredData = data.map((item: any) => {
       return {
-        startTime: item.startTimeMillis,
-        endTime: item.endTimeMillis,
+        startTime: new Date(Number(item.startTimeMillis)),
         steps:
           item["dataset"][0]["point"].length > 0
             ? Math.round(item["dataset"][0]["point"][0]["value"][0]["intVal"])
