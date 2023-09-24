@@ -24,11 +24,11 @@ const readFromFile = (file: string) => {
 };
 
 export const saveLastSync = () => {
-  writeToFile("lastSync", Date.now().toString());
+  writeToFile("lastSync.txt", Date.now().toString());
 };
 
 export const getLastSync = () => {
-  const lastSync = readFromFile("lastSync");
+  const lastSync = readFromFile("lastSync.txt");
   if (lastSync) {
     return new Date(Number(lastSync));
   }
