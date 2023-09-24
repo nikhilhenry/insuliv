@@ -10,7 +10,7 @@ const fitAPI = axios.create({
 // data configuaration
 let currDate = new Date();
 currDate.setHours(23, 59, 59, 999);
-const period = 7; // days
+const period = 7; // days // @Subham can we change this to 1 day? Do we really need 7 days of data?
 const endMillis = currDate.getTime();
 const startMillis = endMillis - period * 86400000;
 const durationDay = 86400000;
@@ -89,7 +89,7 @@ export const getSteps = async () => {
       };
     });
 
-    return filteredData;
+    return filteredData.pop();
   } catch (e) {
     const error = e as AxiosError;
     console.log(error.response?.data);
@@ -118,7 +118,6 @@ export const getBPM = async () => {
     const send_data = [];
     for (const datapoint of data) {
       for (const upper of datapoint.dataset) {
-        console.log(upper);
         for (const point of upper.point) {
           for (const val of point.value) {
             send_data.push(val.fpVal);
@@ -127,7 +126,7 @@ export const getBPM = async () => {
       }
     }
 
-    return send_data;
+    return send_data.pop();
   } catch (e) {
     const error = e as AxiosError;
     console.log(error.response?.data);
