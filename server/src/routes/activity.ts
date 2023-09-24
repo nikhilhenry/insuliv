@@ -1,11 +1,13 @@
 import { Router } from "express";
 import { prisma } from "../lib/prisma";
-import { getActivities } from "../lib/googleFit";
+import { getActivities, getSteps } from "../lib/googleFit";
+import { getLastSync, saveLastSync } from "../lib/state";
 
 export const activityRouter = Router();
 
 activityRouter.get("/sync", async (req, res) => {
-  const activities = await getActivities();
+  const startTime = getLastSync();
+  const activities = await getActivities(startTime);
   if (!activities) {
     console.error("unable to fetch activies");
     return res.status(500).send("unable to fetch activies");
@@ -19,6 +21,12 @@ activityRouter.get("/sync", async (req, res) => {
     data: processedActivites,
   });
   if (savedAcitives.count === processedActivites.length) {
+    // save the last sync time
+    saveLastSync();
     return res.send({ message: "synced successfully" });
   }
+});
+
+activityRouter.get("/sync_steps", async (req, res) => {
+  const steps = await getSteps();
 });

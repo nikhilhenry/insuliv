@@ -15,7 +15,7 @@ const endMillis = currDate.getTime();
 const startMillis = endMillis - period * 86400000;
 const durationDay = 86400000;
 
-export const getActivities = async () => {
+export const getActivities = async (startTime: Date | null) => {
   try {
     const result = await fitAPI.post("", {
       aggregateBy: [
@@ -28,7 +28,7 @@ export const getActivities = async () => {
       bucketByTime: {
         durationMillis: 86400000,
       },
-      startTimeMillis: startMillis,
+      startTimeMillis: startTime?.getTime() || startMillis,
       endTimeMillis: endMillis,
       bucketByActivitySegment: {
         minDurationMillis: 600000, // @Subham if I increase this value will it club more a
