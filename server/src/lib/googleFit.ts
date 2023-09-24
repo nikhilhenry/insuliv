@@ -32,7 +32,7 @@ export const getActivities = async () => {
       startTimeMillis: startMillis,
       endTimeMillis: endMillis,
       bucketByActivitySegment: {
-        minDurationMillis: 10000,
+        minDurationMillis: 600000, // @Subham if I increase this value will it club more a
       },
     });
 
@@ -49,7 +49,12 @@ export const getActivities = async () => {
       })
       .reverse();
 
-    return filteredData;
+    return filteredData as Array<{
+      startTime: string;
+      endTime: string;
+      calories: number;
+      activity: string;
+    }>;
   } catch (e) {
     const error = e as AxiosError;
     console.log(error.response?.data);
