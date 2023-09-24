@@ -51,3 +51,10 @@ model StepsPerDay {
   recordedAt DateTime @default(now())
   steps      Int
 }
+
+model BPMPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  value      Int
+}

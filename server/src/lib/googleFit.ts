@@ -126,7 +126,7 @@ export const getBPM = async () => {
       }
     }
 
-    return send_data.pop();
+    return send_data.pop() as number;
   } catch (e) {
     const error = e as AxiosError;
     console.log(error.response?.data);

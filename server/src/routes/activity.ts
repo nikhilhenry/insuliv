@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../lib/prisma";
-import { getActivities, getSteps } from "../lib/googleFit";
+import { getActivities, getBPM, getSteps } from "../lib/googleFit";
 import { getLastSync, saveLastSync } from "../lib/state";
 
 export const activityRouter = Router();
@@ -36,6 +36,18 @@ activityRouter.get("/sync", async (req, res) => {
       where: { date: justDate },
       update: { steps: stepRecord.steps },
       create: { date: justDate, steps: stepRecord.steps },
+    });
+
+    // sync bpm
+    const bpmRecord = await getBPM();
+    if (!bpmRecord) {
+      console.error("unable to fetch bpm");
+      return res.status(500).send("unable to fetch bpm");
+    }
+    const savedBPM = await prisma.bPMPerDay.upsert({
+      where: { date: justDate },
+      update: { value: bpmRecord },
+      create: { date: justDate, value: bpmRecord },
     });
 
     saveLastSync();
