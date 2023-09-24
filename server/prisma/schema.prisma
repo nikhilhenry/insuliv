@@ -21,6 +21,37 @@ model SportActivity {
   name       String
 }
 
+model BPMPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  value      Int
+}
+
+
+model StepsPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  steps      Int
+}
+
+model CaloriesPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  value      Int
+}
+
+enum ServingString {
+  SLICE
+  CUP
+  SERVING
+  PIECE
+  BOWL
+  BUNS
+}
+
 model FoodActivity {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
@@ -34,36 +65,6 @@ model FoodActivity {
   Serving_g      String
   Serving_quant  String
   Serving_string String
-}
-
-model BPMPerDay {
-  id         Int      @id @default(autoincrement())
-  date       String   @unique
-  recordedAt DateTime @default(now())
-  value      Int
-}
-
-model CaloriesPerDay {
-  id         Int      @id @default(autoincrement())
-  date       String   @unique
-  recordedAt DateTime @default(now())
-  value      Int
-}
-
-model StepsPerDay {
-  id         Int      @id @default(autoincrement())
-  date       String   @unique
-  recordedAt DateTime @default(now())
-  steps      Int
-}
-
-enum ServingString {
-  SLICE
-  CUP
-  SERVING
-  PIECE
-  BOWL
-  BUNS
 }
 
 enum DoseType {
@@ -84,4 +85,5 @@ model PillActivity {
   Type      DoseType?
   Category  String
   createdAt DateTime     @default(now())
-}
+ }
+ 
