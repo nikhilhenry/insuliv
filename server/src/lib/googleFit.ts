@@ -81,3 +81,36 @@ export const getSteps = async () => {
 
   return filteredData;
 };
+
+export const getBPM = async () => {
+  const result = await fitAPI.post("", {
+    aggregateBy: [
+      {
+        dataTypeName: "com.google.heart_rate.bpm",
+        dataSourceId:
+          "derived:com.google.heart_rate.bpm:com.google.android.gms:merge_heart_rate_bpm",
+      },
+    ],
+    bucketByTime: {
+      durationMillis: 86400000,
+    },
+    startTimeMillis: endMillis - 3 * durationDay,
+    endTimeMillis: endMillis,
+  });
+
+  const data = result.data.bucket;
+
+  const send_data = [];
+  for (const datapoint of data) {
+    for (const upper of datapoint.dataset) {
+      console.log(upper);
+      for (const point of upper.point) {
+        for (const val of point.value) {
+          send_data.push(val.fpVal);
+        }
+      }
+    }
+  }
+
+  return send_data;
+};
