@@ -65,3 +65,36 @@ activityRouter.get("/sync", async (req, res) => {
     return res.status(500).send("unable to sync");
   }
 });
+
+activityRouter.get("/", async (req, res) => {
+  const timeRange = req.query.range as string;
+  if (!timeRange) {
+    return res.status(400).send("range is required");
+  }
+  let startTime: Date = new Date();
+  if (timeRange === "today") {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    startTime = date;
+  }
+  if (timeRange === "week") {
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+    startTime = date;
+  }
+  if (timeRange === "month") {
+    const date = new Date();
+    date.setDate(date.getDate() - 30);
+    startTime = date;
+  }
+
+  // fetch sport activities
+  const activities = await prisma.sportActivity.findMany({
+    where: { recordedAt: { gte: startTime } },
+    orderBy: { recordedAt: "desc" },
+  });
+
+  // @ todo fetch food and pills for activities
+
+  return res.send({ activities });
+});
