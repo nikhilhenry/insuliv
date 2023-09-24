@@ -7,7 +7,7 @@ import { getLastSync, saveLastSync } from "./state";
 // console.log(activities?.length);
 // console.log(activities);
 
-console.log(await getActivities(getLastSync()));
+console.log(await getSteps());
 // console.log(activities[0]);
 // const date = new Date(Number(activities[0].startTime));
 // console.log(date.toLocaleDateString());

@@ -73,7 +73,7 @@ export const getSteps = async () => {
       bucketByTime: {
         durationMillis: 86400000, // @ Subham will this get us today's steps also?
       },
-      startTimeMillis: startMillis,
+      startTimeMillis: new Date().setHours(0, 0, 0, 0),
       endTimeMillis: endMillis,
     });
 
@@ -89,7 +89,7 @@ export const getSteps = async () => {
       };
     });
 
-    return filteredData.pop();
+    return filteredData.pop() as { startTime: Date; steps: number };
   } catch (e) {
     const error = e as AxiosError;
     console.log(error.response?.data);

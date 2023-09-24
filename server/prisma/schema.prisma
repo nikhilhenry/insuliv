@@ -44,3 +44,10 @@ enum ServingString {
   BOWL
   BUNS
 }
+
+model StepsPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  steps      Int
+}
