@@ -37,16 +37,14 @@ export const getActivities = async (startTime: Date | null) => {
 
     const data = result.data.bucket;
 
-    const filteredData = data
-      .map((item: any) => {
-        return {
-          startTime: item.startTimeMillis,
-          endTime: item.endTimeMillis,
-          calories: Math.round(item.dataset[0].point[0].value[0].fpVal),
-          activity: activity_maps[item.activity] || "Unknown",
-        };
-      })
-      .reverse();
+    const filteredData = data.map((item: any) => {
+      return {
+        startTime: item.startTimeMillis,
+        endTime: item.endTimeMillis,
+        calories: Math.round(item.dataset[0].point[0].value[0].fpVal),
+        activity: activity_maps[item.activity] || "Unknown",
+      };
+    });
 
     return filteredData as Array<{
       startTime: string;
