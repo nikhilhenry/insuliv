@@ -1,0 +1,70 @@
+[
+    {
+        "Name": "Humulin R U-100",
+        "Category": "Short Acting Insulin"
+    },
+    {
+        "Name": "Novolin R FlexPen",
+        "Category": "Short Acting Insulin"
+    },
+    {
+        "Name": "Novolin R ReliOn",
+        "Category": "Short Acting Insulin"
+    },
+    {
+        "Name": "Novolin R FlexPen ReliOn",
+        "Category": "Short Acting Insulin"
+    },
+    {
+        "Name": "Tresiba FlexTouch",
+        "Category": "Long Acting Insulin"
+    },
+    {
+        "Name": "Levemir",
+        "Category": "Long Acting Insulin"
+    },
+    {
+        "Name": "Lantus",
+        "Category": "Long Acting Insulin"
+    },
+    {
+        "Name": "Lantus SoloStar",
+        "Category": "Long Acting Insulin"
+    },
+    {
+        "Name": "Semglee-yfgn",
+        "Category": "Long Acting Insulin"
+    },
+    {
+        "Name": "Humulin R U-500",
+        "Category": "Long Acting Insulin"
+    },
+    {
+        "Name": "Metformin",
+        "Category": "Medication"
+    },
+    {
+        "Name": "Glimepiride",
+        "Category": "Medication"
+    },
+    {
+        "Name": "Actos",
+        "Category": "Medication"
+    },
+    {
+        "Name": "Sulfonylurea",
+        "Category": "Medication"
+    },
+    {
+        "Name": "Januvia",
+        "Category": "Medication"
+    },
+    {
+        "Name": "Biguanide",
+        "Category": "Medication"
+    },
+    {
+        "Name": "Glyburide",
+        "Category": "Medication"
+    }
+]
