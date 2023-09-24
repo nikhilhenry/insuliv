@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use("/api/post", postRouter);
 app.use("/api/image", imageRouter);
-app.use("/api/activities", activityRouter);
+app.use("/api/activity", activityRouter);
 app.use("/api/meta", metaRouter);
 
 app.get("/ping", (req, res) => {
