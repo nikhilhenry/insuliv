@@ -16,3 +16,10 @@ model Post {
   updatedAt DateTime @updatedAt
   message   String
 }
+
+model SportActivity {
+  id         Int      @id @default(autoincrement())
+  recordedAt DateTime
+  calories   Int
+  name       String
+}
