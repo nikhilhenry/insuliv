@@ -18,5 +18,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
-  bottomholder: {},
+  bottomholder: {
+    // overflow: "hidden",
+  },
 });

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, FlatList } from "react-native";
 import { COLORS, Icons, FONT, SIZES } from "../../constants";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "./ActivityLogger.style";
 import type { RootStackParamList } from "../../App";
 import Icon from "react-native-vector-icons/Octicons";
 import DropDownPicker from "react-native-dropdown-picker";
+import ActivityList from "../ActivityList";
 const ActivityLogger = ({ navigation }: { navigation: any }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("today");
@@ -118,7 +119,9 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
             setItems={setItemsActivity}
           />
         </View>
-        <View style={styles.bottomholder}></View>
+        <View style={styles.bottomholder}>
+          <ActivityList />
+        </View>
       </View>
     </View>
   );
