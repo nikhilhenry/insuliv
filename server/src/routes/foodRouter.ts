@@ -4,6 +4,11 @@ import { allowedNodeEnvironmentFlags } from "process";
 
 export const foodRouter = Router();
 
+foodRouter.get("/last", async (req, res) => {
+  const foodlog = (await prisma.foodActivity.findMany({ take: -1 }))[0];
+  return res.json(foodlog);
+});
+
 foodRouter.get("/", async (req, res) => {
   const foodlog = await prisma.foodActivity.findMany();
   return res.json(foodlog);
