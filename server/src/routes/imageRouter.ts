@@ -59,5 +59,5 @@ imageRouter.post("/pdf/upload", upload.single("file"), async (req, res) => {
   });
   return res
     .status(200)
-    .send({ img_url: `${process.env.HOST_NAME}/api/image/pdf/:id` + id });
+    .send({ img_url: `${process.env.HOST_NAME}/api/image/pdf/` + id });
 });
