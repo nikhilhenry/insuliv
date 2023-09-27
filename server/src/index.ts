@@ -3,12 +3,14 @@ import express from "express";
 import "dotenv/config";
 import { imageRouter } from "./routes/imageRouter";
 import { postRouter } from "./routes/post";
+import { activityRouter } from "./routes/acitivityRouter";
 
 const app = express();
 
 app.use(express.json());
 app.use("/api/image", imageRouter);
 app.use("/api/post", postRouter);
+app.use("/api/activity", activityRouter);
 
 app.get("/ping", (req, res) => {
   return res.json({ message: "pong" });
