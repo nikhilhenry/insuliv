@@ -23,56 +23,46 @@ metaRouter.get("/summary", async (req, res) => {
 metaRouter.get("/weekly", async (req, res) => {
   let startTime: Date = new Date();
   const date = new Date();
-  date.setHours(0,0,0,0)
+  date.setHours(0, 0, 0, 0);
   startTime = date;
 
   const average_Calories = [];
   const return_data = [];
 
-  for(let i=0;i<7;i++){ 
+  for (let i = 0; i < 7; i++) {
     date.setDate(date.getDate() - i);
     startTime = date;
-    const carbs=await prisma.foodActivity.findMany({
-      where: {createdAt: { gte: startTime } }
-    })
-
-    var sum_calories=0;
-    carbs.forEach((item)=>sum_calories+=Number(item.Carbs));
-    average_Calories.push(sum_calories/carbs.length);
-  }
-  return_data.push({category: "Carbs",
-  data: average_Calories});
-
-
-  var calories = await getCalories();
-  var daily_cal=[]
-
-  calories?.forEach((item)=>
-  daily_cal.push(Number(item.calories))
-  )
-
-  return_data.push({category: "Calories",
-  data: daily_cal});
-
-  date.setHours(0,0,0,0)
-  startTime = date;
-
-  const bpm_per_day=[];
-
-  for(let i=0;i<7;i++)
-  {
-    date.setDate(date.getDate() - i);
-    startTime = date;
-    const bpm=await prisma.bPMPerDay.findMany({
-      where: {recordedAt: { gte: startTime } }
+    const carbs = await prisma.foodActivity.findMany({
+      where: { createdAt: { gte: startTime } },
     });
 
-    bpm_per_day.push(bpm[0].value);
+    var sum_calories = 0;
+    carbs.forEach((item) => (sum_calories += Number(item.Carbs)));
+    average_Calories.push(sum_calories / carbs.length);
   }
+  return_data.push({ category: "Carbs", data: average_Calories });
 
-  return_data.push({category: "Heart Rate",
-data: bpm_per_day})
+  var calories = await getCalories();
+  var daily_cal = [];
 
+  calories?.forEach((item) => daily_cal.push(Number(item.calories)));
+
+  return_data.push({ category: "Calories", data: daily_cal });
+
+  date.setHours(0, 0, 0, 0);
+  startTime = date;
+
+  const bpm_per_day: any[] = [];
+
+  const bpm = await prisma.bPMPerDay.findMany({
+    where: {
+      recordedAt: { gte: new Date(date.setDate(date.getDate() - 7)) },
+    },
+  });
+
+  bpm.forEach((item) => bpm_per_day.push(Number(item.value)));
+
+  return_data.push({ category: "Heart Rate", data: bpm_per_day });
 
   return res.send(return_data);
-})
+});
