@@ -30,26 +30,32 @@ metaRouter.get("/weekly", async (req, res) => {
 
   const total_calories_consumed_per_day = [];
 
-  let startDate;
-  let endDate;
+  const startDate = 28;
 
-  for(let i =7;i>-1;i--){
-    startDate = new Date(date.setDate(date.getDate() - i));
-    startDate.setHours(0, 0, 0, 0);
-    endDate = new Date(startDate.setHours(23, 59, 59, 999));
+  for (let i = 6; i > 0; i--) {
+    const foodEatenThatDay = await prisma.foodActivity.findMany({
+      where: {
+        createdAt: {
+          gte: new Date(`2023-09-${startDate - i}`),
+          lte: new Date(`2023-09-${startDate - i + 1}`),
+        },
+      },
+    });
 
-    const foodEatenThatDay = await prisma.foodActivity.findMany({where:{
-      createdAt: { gte: startDate, lte: endDate },
-    }})
+    console.log(foodEatenThatDay);
 
-    total_calories_consumed_per_day.push(foodEatenThatDay.reduce((acc,curr)=>acc+Number(curr.Calories),0))
+    total_calories_consumed_per_day.push(
+      foodEatenThatDay.reduce((acc, curr) => acc + Number(curr.Calories), 0)
+    );
   }
 
-  return_data.push({ category: "Calories", data: total_calories_consumed_per_day });
+  return_data.push({
+    category: "Calories Consumed",
+    data: total_calories_consumed_per_day,
+  });
 
-
-  var calories = await getCalories();
-  var daily_cal:any[] = [];
+  const calories = await getCalories();
+  const daily_cal: any[] = [];
 
   calories?.forEach((item) => daily_cal.push(Number(item.calories)));
 
