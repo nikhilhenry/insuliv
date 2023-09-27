@@ -1,10 +1,15 @@
 import { StyleSheet } from "react-native";
 import { COLORS, FONT, SIZES } from "../constants";
 const styles = StyleSheet.create({
-  textinput: {},
+  textinput: {
+    width: "100%",
+    backgroundColor: COLORS.lightGray,
+    borderRadius: 10,
+    padding: 10,
+  },
   counterButtton: {
     width: 45,
-    height: "60%",
+    height: 45,
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 10,
