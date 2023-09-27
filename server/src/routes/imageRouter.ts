@@ -10,6 +10,17 @@ const photos = deta.Drive("food");
 
 export const imageRouter = Router();
 
+imageRouter.get("/pdf/:id", async (req, res) => {
+  const id = req.params.id;
+  const img = await photos.get(id);
+  if (!img) {
+    return res.status(404).json({ message: "Image not found" });
+  }
+  res.contentType("application/pdf");
+  const imgData = await img.arrayBuffer();
+  return res.end(Buffer.from(imgData), "binary");
+});
+
 imageRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   const img = await photos.get(id);
@@ -48,5 +59,5 @@ imageRouter.post("/pdf/upload", upload.single("file"), async (req, res) => {
   });
   return res
     .status(200)
-    .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
+    .send({ img_url: `${process.env.HOST_NAME}/api/image/pdf/:id` + id });
 });
