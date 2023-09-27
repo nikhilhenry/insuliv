@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { getActivities, getBPM, getSteps } from "./googleFit";
+import { getActivities, getBPM, getCalories, getSteps } from "./googleFit";
 import { getAuthToken } from "./getAccessToken";
 import { getLastSync, saveLastSync } from "./state";
 
@@ -7,7 +7,7 @@ import { getLastSync, saveLastSync } from "./state";
 // console.log(activities?.length);
 // console.log(activities);
 
-console.log(await getBPM());
+console.log(await getCalories());
 // console.log(activities[0]);
 // const date = new Date(Number(activities[0].startTime));
 // console.log(date.toLocaleDateString());
