@@ -5,68 +5,6 @@ import { getLastSync, saveLastSync } from "../lib/state";
 
 export const activityRouter = Router();
 
-activityRouter.get("/sync", async (req, res) => {
-  try {
-    const startTime = getLastSync();
-
-    // sync sport activites
-    const activities = await getActivities(startTime);
-    if (!activities) {
-      console.error("unable to fetch activies");
-      return res.status(500).send("unable to fetch activies");
-    }
-    const processedActivites = activities.map((activity) => ({
-      recordedAt: new Date(Number(activity.startTime)),
-      calories: activity.calories,
-      name: activity.activity,
-    }));
-    const savedAcitives = await prisma.sportActivity.createMany({
-      data: processedActivites,
-    });
-
-    const justDate = new Date().toISOString().split("T")[0];
-
-    // sync calories
-    const calories = activities.reduce((acc, curr) => acc + curr.calories, 0);
-    const savedCalories = await prisma.caloriesPerDay.upsert({
-      where: { date: justDate },
-      update: { value: { increment: calories } },
-      create: { date: justDate, value: calories },
-    });
-
-    // sync steps
-    const stepRecord = await getSteps();
-    if (!stepRecord) {
-      console.error("unable to fetch steps");
-      return res.status(500).send("unable to fetch steps");
-    }
-    const savedSteps = await prisma.stepsPerDay.upsert({
-      where: { date: justDate },
-      update: { steps: stepRecord.steps },
-      create: { date: justDate, steps: stepRecord.steps },
-    });
-
-    // sync bpm
-    const bpmRecord = await getBPM();
-    if (!bpmRecord) {
-      console.error("unable to fetch bpm");
-      return res.status(500).send("unable to fetch bpm");
-    }
-    const savedBPM = await prisma.bPMPerDay.upsert({
-      where: { date: justDate },
-      update: { value: bpmRecord },
-      create: { date: justDate, value: bpmRecord },
-    });
-
-    saveLastSync();
-    console.log("synced successfully");
-    return res.send({ message: "synced successfully" });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("unable to sync");
-  }
-});
-
 activityRouter.get("/", async (req, res) => {
   const timeRange = req.query.range as string;
   if (!timeRange) {
@@ -78,6 +16,13 @@ activityRouter.get("/", async (req, res) => {
     date.setHours(0, 0, 0, 0);
     startTime = date;
   }
+
+  if (timeRange === "yesterday") {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    startTime = date;
+  }
+
   if (timeRange === "week") {
     const date = new Date();
     date.setDate(date.getDate() - 7);
@@ -90,12 +35,52 @@ activityRouter.get("/", async (req, res) => {
   }
 
   // fetch sport activities
-  const activities = await prisma.sportActivity.findMany({
+
+  const sportActivities = await prisma.sportActivity.findMany({
     where: { recordedAt: { gte: startTime } },
     orderBy: { recordedAt: "desc" },
   });
 
-  // @ todo fetch food and pills for activities
+  //fetch food and pills for activities
+  const food = await prisma.foodActivity.findMany({
+    where: { createdAt: { gte: startTime } },
+    orderBy: { createdAt: "desc" },
+  });
 
-  return res.send({ activities });
+  const pill = await prisma.pillActivity.findMany({
+    where: { createdAt: { gte: startTime } },
+    orderBy: { createdAt: "desc" },
+  });
+
+  const activities: Array<{
+    category: string;
+    recordedAt: Date;
+    data: string;
+  }> = [];
+
+  food.forEach((item) =>
+    activities.push({
+      category: "food",
+      recordedAt: item.createdAt,
+      data: item.Calories,
+    })
+  );
+  pill.forEach((item) =>
+    activities.push({
+      category: "pill",
+      recordedAt: item.createdAt,
+      data: item.Quantity?.toString() || "",
+    })
+  );
+  sportActivities.forEach((item) =>
+    activities.push({
+      category: "sports",
+      recordedAt: item.recordedAt,
+      data: item.calories?.toString(),
+    })
+  );
+
+  return res.send(
+    activities.sort((a, b) => Number(b.recordedAt) - Number(a.recordedAt))
+  );
 });
