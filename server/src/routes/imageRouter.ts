@@ -36,7 +36,7 @@ imageRouter.post("/upload", upload.single("file"), async (req, res) => {
     .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
 });
 
-imageRouter.post("/upload/pdf", upload.single("file"), async (req, res) => {
+imageRouter.post("/pdf/upload", upload.single("file"), async (req, res) => {
   const file = req.file;
   if (!file) {
     return res.status(400).json({ message: "No file uploaded" });
