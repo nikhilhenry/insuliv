@@ -1,16 +1,17 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FlatList, Text, View } from "react-native";
+import { useEffect } from "react";
 
 const ActivityList = () => {
   const queryClient = useQueryClient();
 
+  useEffect(() => {}, []);
   const query = useQuery({ queryKey: ["todos"], queryFn: getActivities });
-
   return (
     <>
       {query.isSuccess ? (
         <FlatList
-          className="h-full overflow-hidden"
+          className=""
           data={query.data}
           renderItem={({ item }) => <Item title={item.category} />}
           keyExtractor={(item) => item.id}

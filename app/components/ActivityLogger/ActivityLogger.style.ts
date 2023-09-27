@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   bottomholder: {
-    overflow: "hidden",
+    // overflow: "hidden",
   },
 });
