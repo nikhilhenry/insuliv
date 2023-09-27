@@ -29,7 +29,7 @@ const Item: React.FC<{ title: string }> = ({ title }) => {
 const getActivities = async () => {
   try {
     const result = await fetch(
-      "http://localhost:3000/api/activity/?range=today"
+      "https://apollo-web-th7i.onrender.com/api/activity/?range=today"
     );
 
     const data = (await result.json()) as Array<{

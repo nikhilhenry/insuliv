@@ -65,7 +65,9 @@ const InfoCardContainer = () => {
 
 const getMetaSummary = async () => {
   try {
-    const result = await fetch("http://localhost:3000/api/meta/summary");
+    const result = await fetch(
+      "https://apollo-web-th7i.onrender.com/api/meta/summary"
+    );
 
     const data = (await result.json()) as {
       heartRate: number;
