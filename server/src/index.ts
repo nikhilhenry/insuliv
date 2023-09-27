@@ -10,9 +10,11 @@ import { metaRouter } from "./routes/metaRouter";
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/api/post", postRouter);
 app.use("/api/food", foodRouter);
-app.use("/api/pill",pillRouter);
+app.use("/api/pill", pillRouter);
 app.use("/api/image", imageRouter);
 app.use("/api/activity", activityRouter);
 app.use("/api/meta", metaRouter);

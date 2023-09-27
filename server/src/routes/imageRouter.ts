@@ -10,6 +10,29 @@ const photos = deta.Drive("food");
 
 export const imageRouter = Router();
 
+imageRouter.post("/upload/string", async (req, res) => {
+  console.log("ive been hit");
+  console.log(req.body);
+  res.send({ message: "pong" });
+  return;
+  try {
+    const file: string = req.body.imageString;
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    const fileName = nanoid(4) + ".jpg";
+    // load the image from the file system in the uploads folder
+    const id = await photos.put(fileName, {
+      data: file,
+    });
+    return res
+      .status(200)
+      .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 imageRouter.get("/pdf/:id", async (req, res) => {
   const id = req.params.id;
   const img = await photos.get(id);
