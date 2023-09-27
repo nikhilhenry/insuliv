@@ -6,26 +6,38 @@ import { InfoCardContainer, ActivityLogger } from "../components";
 import Icon from "react-native-vector-icons/Fontisto";
 import { HomeTabParamList } from "../scenes/Home";
 
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 const HomeScreen: React.FC<NativeStackScreenProps<HomeTabParamList>> = ({
   navigation,
 }) => {
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingVertical: 40,
-        }}
-      >
-        <Text className="text-black font-bold text-3xl">Hi Abhinav</Text>
-        <TouchableOpacity>
-          <Icon name="bell" size={27} color={COLORS.IconColor} />
-        </TouchableOpacity>
-      </View>
-      <InfoCardContainer />
-      <ActivityLogger navigation={navigation} />
-      <StatusBar style="auto" />
+      <QueryClientProvider client={queryClient}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingVertical: 40,
+          }}
+        >
+          <Text className="text-black font-bold text-3xl">Hi Abhinav</Text>
+          <TouchableOpacity>
+            <Icon name="bell" size={27} color={COLORS.IconColor} />
+          </TouchableOpacity>
+        </View>
+        <InfoCardContainer />
+        <ActivityLogger navigation={navigation} />
+        <StatusBar style="auto" />
+      </QueryClientProvider>
     </View>
   );
 };

@@ -53,6 +53,7 @@ activityRouter.get("/", async (req, res) => {
   });
 
   const activities: Array<{
+    id: number;
     category: string;
     recordedAt: Date;
     data: string;
@@ -60,6 +61,7 @@ activityRouter.get("/", async (req, res) => {
 
   food.forEach((item) =>
     activities.push({
+      id: item.id,
       category: "food",
       recordedAt: item.createdAt,
       data: item.Calories,
@@ -67,6 +69,7 @@ activityRouter.get("/", async (req, res) => {
   );
   pill.forEach((item) =>
     activities.push({
+      id: item.id,
       category: "pill",
       recordedAt: item.createdAt,
       data: item.Quantity?.toString() || "",
@@ -74,6 +77,7 @@ activityRouter.get("/", async (req, res) => {
   );
   sportActivities.forEach((item) =>
     activities.push({
+      id: item.id,
       category: "sports",
       recordedAt: item.recordedAt,
       data: item.calories?.toString(),

@@ -6,6 +6,7 @@ import { styles } from "./ActivityLogger.style";
 import type { RootStackParamList } from "../../App";
 import Icon from "react-native-vector-icons/Octicons";
 import DropDownPicker from "react-native-dropdown-picker";
+import ActivityList from "../ActivityList";
 const ActivityLogger = ({ navigation }: { navigation: any }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("today");
@@ -118,22 +119,11 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
             setItems={setItemsActivity}
           />
         </View>
-        <FlatList
-          data={[
-            { id: 1, val: "1" },
-            { id: 2, val: "2" },
-          ]}
-          renderItem={({ item }) => <Item title={item.val} />}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <ActivityList />
         <View style={styles.bottomholder}></View>
       </View>
     </View>
   );
-};
-
-const Item: React.FC<{ title: string }> = ({ title }) => {
-  return <Text>{title}</Text>;
 };
 
 export default ActivityLogger;
