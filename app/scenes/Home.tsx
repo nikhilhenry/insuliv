@@ -6,6 +6,8 @@ import { View, Text } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
 import Food from "./Food";
+import Report from "./Report";
+import Settings from "./Settings";
 
 const Tab = createBottomTabNavigator();
 const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
@@ -45,6 +47,8 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
     >
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="FoodScreen" component={Food} />
+      <Tab.Screen name="ReportScreen" component={Report} />
+      <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
 };

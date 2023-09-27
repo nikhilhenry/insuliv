@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,83 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model BPMPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  value      Int
+}
+
+model CaloriesPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  value      Int
+}
+
+model FoodActivity {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  Calories       String
+  Carbs          String
+  Category       String
+  Fats           String
+  Fiber          String
+  Name           String
+  Protein        String
+  Serving_g      String
+  Serving_quant  String
+  Serving_string String
+}
+
+model PillActivity {
+  id        Int       @id @default(autoincrement())
+  Name      String
+  Quantity  Float?
+  Type      DoseType?
+  createdAt DateTime  @default(now())
+  Category  String
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  message   String
+}
+
+model SportActivity {
+  id         Int      @id @default(autoincrement())
+  recordedAt DateTime
+  calories   Int
+  name       String
+}
+
+model StepsPerDay {
+  id         Int      @id @default(autoincrement())
+  date       String   @unique
+  recordedAt DateTime @default(now())
+  steps      Int
+}
+
+enum DoseType {
+  PILLS
+  DROPS
+  SPRAYS
+  UNITS
+  DOSES
+  ml
+  tsp
+  tbsp
+}
+
+enum ServingString {
+  SLICE
+  CUP
+  SERVING
+  PIECE
+  BOWL
+  BUNS
 }
