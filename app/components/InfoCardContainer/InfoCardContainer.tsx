@@ -31,7 +31,7 @@ const InfoCardContainer = () => {
             title="Heart Rate"
             icon={<Icon name="heart" size={36} color={COLORS.secondaryRedD} />}
             value={query.data.heartRate}
-            unit="pulse/min"
+            unit="pul/min"
             mainColor={COLORS.secondaryRedD}
             secondaryColor={COLORS.primaryRedL}
           />

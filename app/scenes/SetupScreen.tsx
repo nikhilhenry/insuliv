@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 import { RootStackParamList } from "../App";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import { COLORS } from "../constants";
 
 const SetupScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
@@ -11,7 +12,16 @@ const SetupScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
       <Text style={{ fontSize: 20, color: COLORS.lightGray }}>
         Live the sweet life with
       </Text>
-      <Text style={{ fontSize: 75, color: COLORS.lightGray }}>Insuliv</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Icon name="hands-helping" color={COLORS.lightGray} size={50} />
+        <Text style={{ fontSize: 60, color: COLORS.lightGray }}>Insuliv</Text>
+      </View>
       <Pressable
         onPress={() => {
           navigation.push("Setup1");

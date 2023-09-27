@@ -30,7 +30,7 @@ const HomeScreen: React.FC<NativeStackScreenProps<HomeTabParamList>> = ({
             paddingVertical: 40,
           }}
         >
-          <Text className="text-black font-bold text-3xl">Hi Abhinav</Text>
+          <Text className="text-black font-bold text-3xl">Insuliv</Text>
           <TouchableOpacity>
             <Icon name="bell" size={27} color={COLORS.IconColor} />
           </TouchableOpacity>

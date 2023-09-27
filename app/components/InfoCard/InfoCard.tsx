@@ -35,7 +35,6 @@ const InfoCard = ({
 
           <View
             style={{
-              flex: 1,
               flexDirection: "row",
               justifyContent: "flex-start",
               alignItems: "flex-end",
@@ -45,7 +44,7 @@ const InfoCard = ({
             <Text
               style={{
                 fontWeight: "500",
-                fontSize: SIZES.xxLarge,
+                fontSize: SIZES.xLarge,
                 marginBottom: -5,
               }}
             >

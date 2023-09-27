@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { FlatList, Text, View } from "react-native";
-
+import ActivityCard from "../components/ActivityCard/ActivityCard";
 const ActivityList = () => {
   const query = useQuery({
     queryKey: ["activity-list"],
@@ -12,7 +12,7 @@ const ActivityList = () => {
         <FlatList
           className=""
           data={query.data}
-          renderItem={({ item }) => <Item title={item.category} />}
+          renderItem={({ item }) => <ActivityCard activity={item} />}
           keyExtractor={(item) => item.id}
         />
       ) : (
@@ -20,10 +20,6 @@ const ActivityList = () => {
       )}
     </>
   );
-};
-
-const Item: React.FC<{ title: string }> = ({ title }) => {
-  return <Text>{title}</Text>;
 };
 
 const getActivities = async () => {
