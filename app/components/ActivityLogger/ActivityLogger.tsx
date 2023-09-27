@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, FlatList } from "react-native";
 import { COLORS, Icons, FONT, SIZES } from "../../constants";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "./ActivityLogger.style";
@@ -118,10 +118,22 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
             setItems={setItemsActivity}
           />
         </View>
+        <FlatList
+          data={[
+            { id: 1, val: "1" },
+            { id: 2, val: "2" },
+          ]}
+          renderItem={({ item }) => <Item title={item.val} />}
+          keyExtractor={(item) => item.id.toString()}
+        />
         <View style={styles.bottomholder}></View>
       </View>
     </View>
   );
+};
+
+const Item: React.FC<{ title: string }> = ({ title }) => {
+  return <Text>{title}</Text>;
 };
 
 export default ActivityLogger;
