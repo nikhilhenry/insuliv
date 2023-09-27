@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../lib/prisma";
 import { getCalories } from "../lib/googleFit";
-import { start } from "repl";
 
 export const metaRouter = Router();
 
@@ -29,21 +28,28 @@ metaRouter.get("/weekly", async (req, res) => {
   const average_Calories = [];
   const return_data = [];
 
-  for (let i = 0; i < 7; i++) {
-    date.setDate(date.getDate() - i);
-    startTime = date;
-    const carbs = await prisma.foodActivity.findMany({
-      where: { createdAt: { gte: startTime } },
-    });
+  const total_calories_consumed_per_day = [];
 
-    var sum_calories = 0;
-    carbs.forEach((item) => (sum_calories += Number(item.Carbs)));
-    average_Calories.push(sum_calories / carbs.length);
+  let startDate;
+  let endDate;
+
+  for(let i =7;i>-1;i--){
+    startDate = new Date(date.setDate(date.getDate() - i));
+    startDate.setHours(0, 0, 0, 0);
+    endDate = new Date(startDate.setHours(23, 59, 59, 999));
+
+    const foodEatenThatDay = await prisma.foodActivity.findMany({where:{
+      createdAt: { gte: startDate, lte: endDate },
+    }})
+
+    total_calories_consumed_per_day.push(foodEatenThatDay.reduce((acc,curr)=>acc+Number(curr.Calories),0))
   }
-  return_data.push({ category: "Carbs", data: average_Calories });
+
+  return_data.push({ category: "Calories", data: total_calories_consumed_per_day });
+
 
   var calories = await getCalories();
-  var daily_cal = [];
+  var daily_cal:any[] = [];
 
   calories?.forEach((item) => daily_cal.push(Number(item.calories)));
 
