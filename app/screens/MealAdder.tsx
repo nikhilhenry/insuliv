@@ -13,7 +13,6 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "../components/CustomTextInput/CustomTestInput";
 import styles from "../styles/AdderForm";
 import { useState, useEffect } from "react";
