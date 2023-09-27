@@ -1,12 +1,11 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FlatList, Text, View } from "react-native";
-import { useEffect } from "react";
 
 const ActivityList = () => {
-  const queryClient = useQueryClient();
-
-  useEffect(() => {}, []);
-  const query = useQuery({ queryKey: ["todos"], queryFn: getActivities });
+  const query = useQuery({
+    queryKey: ["activity-list"],
+    queryFn: getActivities,
+  });
   return (
     <>
       {query.isSuccess ? (
@@ -44,7 +43,7 @@ const getActivities = async () => {
       return { ...item, id: index.toString() };
     });
 
-    console.log(map);
+    console.log("activity", map);
 
     return map;
   } catch (error) {

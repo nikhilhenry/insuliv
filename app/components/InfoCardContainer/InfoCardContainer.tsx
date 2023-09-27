@@ -7,10 +7,11 @@ import { styles } from "./InfoCardContainer.style";
 import InfoCard from "../InfoCard/InfoCard";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const InfoCardContainer = ({}: {}) => {
-  const queryClient = useQueryClient();
-
-  const query = useQuery({ queryKey: ["todos"], queryFn: getMetaSummary });
+const InfoCardContainer = () => {
+  const query = useQuery({
+    queryKey: ["meta-summary"],
+    queryFn: getMetaSummary,
+  });
 
   return (
     <View style={styles.Infocontainer}>
