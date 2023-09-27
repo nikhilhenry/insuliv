@@ -119,8 +119,9 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
             setItems={setItemsActivity}
           />
         </View>
-        <ActivityList />
-        <View style={styles.bottomholder}></View>
+        <View style={styles.bottomholder}>
+          <ActivityList />
+        </View>
       </View>
     </View>
   );

@@ -7,18 +7,18 @@ const ActivityList = () => {
   const query = useQuery({ queryKey: ["todos"], queryFn: getActivities });
 
   return (
-    <View>
+    <>
       {query.isSuccess ? (
         <FlatList
-          className=""
+          className="h-full overflow-hidden"
           data={query.data}
           renderItem={({ item }) => <Item title={item.category} />}
           keyExtractor={(item) => item.id}
         />
       ) : (
-        <Text>hi</Text>
+        <Text className="text-center">Loading</Text>
       )}
-    </View>
+    </>
   );
 };
 
