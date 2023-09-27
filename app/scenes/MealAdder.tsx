@@ -1,85 +1,498 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../App";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { COLORS, SIZES } from "../constants";
 import React from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import {
-  Controller,
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Alert,
   Pressable,
-  Platform,
-  ScrollView,
-  Switch,
   Text,
   View,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "../components/CustomTextInput/CustomTestInput";
 import styles from "../styles/AdderForm";
-import { SignUpFormSchema, signUpFormSchema } from "../schemas/mealAdderSchema";
-import { getReadableValidationErrorMessage } from "../utils/utils";
-import { useState } from "react";
-const PreListedFood = [
-  { label: "SampleFood1", value: "SampleFood1" },
-  { label: "SampleFood2", value: "SampleFood2" },
+import { useState, useEffect } from "react";
+import FoodData from "../food_nutrition_db.json";
+const Serving_types = [
+  { label: "Cup", value: "Cup" },
+  { label: "Piece", value: "Piece" },
+  { label: "Slice", value: "Slice" },
+  { label: "Bowl", value: "Bowl" },
+  { label: "Serving", value: "Serving" },
 ];
+
 const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   navigation,
 }) => {
+  useEffect(() => {
+    let foodlist: {
+      label: string;
+      value: string;
+    }[] = [];
+    for (var i = 0; i < FoodData.length; i++) {
+      foodlist.push({ label: FoodData[i].Name, value: FoodData[i].Name });
+    }
+    setPreListedFood(() => foodlist);
+  }, []);
+
   const [listOpen, setListOpen] = useState(false);
-  const [shouldValidateWithZod, setShouldValidateWithZod] =
-    React.useState<boolean>(true);
-
-  const [isCalendarOpenForAndroid, setIsCalendarOpenForAndroid] =
-    React.useState<boolean>(false);
-
-  const methods = useForm<SignUpFormSchema>({
-    resolver: zodResolver(signUpFormSchema),
+  const [typeOpen, setTypeOpen] = useState(false);
+  const [PreListedFood, setPreListedFood] = useState([
+    { label: "SampleFood1", value: "SampleFood1" },
+  ]);
+  const onSubmit = () => {
+    console.log("Submitted successfully");
+  };
+  const fillform = (foodname: string | undefined) => {
+    if (foodname) {
+      for (var i = 0; i < FoodData.length; i++) {
+        if (FoodData[i].Name == foodname) {
+          setValue("foodName", FoodData[i].Name);
+          setValue("calories", String(FoodData[i].Calories));
+          setValue("carbs", String(FoodData[i].Carbs));
+          setValue("fats", String(FoodData[i].Fats));
+          setValue("protein", String(FoodData[i].Protein));
+          setValue("fiber", String(FoodData[i].Fiber));
+          setValue("serving_g", String(FoodData[i].Serving_g));
+          setValue("serving_quant", String(FoodData[i].Serving_quant));
+          setValue("serving_string", String(FoodData[i].Serving_string));
+        }
+      }
+    }
+  };
+  const onError = () => {
+    Alert.alert("Warning");
+  };
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: {},
+  } = useForm({
     defaultValues: {
-      birthDate: new Date(),
+      preListedFood: "",
+      foodName: "",
+      calories: "0",
+      carbs: "0",
+      fats: "0",
+      protein: "0",
+      fiber: "0",
+      serving_g: "0",
+      serving_quant: "0",
+      serving_string: "",
     },
-    mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<SignUpFormSchema> = (data) => {
-    console.log(JSON.stringify(data));
-  };
-
-  const onError: SubmitErrorHandler<SignUpFormSchema> = (errors, e) => {
-    console.log(JSON.stringify(errors));
-    Alert.alert("Warning", getReadableValidationErrorMessage(errors));
-  };
-
   return (
-    <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
-      <Text style={styles.title}>Add a Meal</Text>
-      <View style={styles.root}>
-        <FormProvider {...methods}>
+    <View style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.root}>
+        <View style={styles.spacing} />
+        <Controller
+          control={control}
+          name="preListedFood"
+          render={({ field: { onChange, value } }) => (
+            <DropDownPicker
+              listMode="SCROLLVIEW"
+              placeholder="Select from a food database"
+              zIndex={3000}
+              searchable={true}
+              arrowIconStyle={{
+                padding: 0,
+              }}
+              showTickIcon={true}
+              containerStyle={{}}
+              dropDownContainerStyle={{
+                backgroundColor: COLORS.lightGray,
+                borderWidth: 0,
+              }}
+              style={{
+                backgroundColor: COLORS.lightGray,
+                borderColor: COLORS.lightGray,
+              }}
+              onSelectItem={(item) => fillform(item.value)}
+              open={listOpen}
+              setOpen={() => setListOpen(!listOpen)}
+              items={PreListedFood}
+              value={value}
+              setItems={setPreListedFood}
+              setValue={(item) => onChange(item)}
+            />
+          )}
+          rules={{
+            required: {
+              value: false,
+              message: "Please fill out all required fields.",
+            },
+          }}
+        />
+        <View style={styles.spacing} />
+        <Controller
+          control={control}
+          name="foodName"
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => {
+            return (
+              <TextInput
+                style={styles.textinput}
+                label="Food Name"
+                onBlur={onBlur}
+                value={value}
+                onChangeText={onChange}
+                errorMessage={error?.message}
+              />
+            );
+          }}
+        />
+        <View style={styles.spacing} />
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            columnGap: 70,
+            rowGap: 10,
+            justifyContent: "space-around",
+            marginHorizontal: 22,
+            alignItems: "center",
+          }}
+        >
           <Controller
-            control={methods.control}
-            name="preListedFood"
+            control={control}
+            name="calories"
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "20%",
+                  }}
+                >
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "calories",
+                        String(parseInt(getValues("calories")) - 1)
+                      )
+                    }
+                  >
+                    <Icon name="minus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.textinput}
+                    label="Calories"
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={error?.message}
+                  />
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "calories",
+                        String(parseInt(getValues("calories")) + 1)
+                      )
+                    }
+                  >
+                    <Icon name="plus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                </View>
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="carbs"
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "20%",
+                  }}
+                >
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "carbs",
+                        String(parseInt(getValues("carbs")) - 1)
+                      )
+                    }
+                  >
+                    <Icon name="minus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.textinput}
+                    label="Carbs"
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={error?.message}
+                  />
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "carbs",
+                        String(parseInt(getValues("carbs")) + 1)
+                      )
+                    }
+                  >
+                    <Icon name="plus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                </View>
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="fats"
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "20%",
+                  }}
+                >
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue("fats", String(parseInt(getValues("fats")) - 1))
+                    }
+                  >
+                    <Icon name="minus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.textinput}
+                    label="Fats"
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={error?.message}
+                  />
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue("fats", String(parseInt(getValues("fats")) + 1))
+                    }
+                  >
+                    <Icon name="plus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                </View>
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="protein"
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "20%",
+                  }}
+                >
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "protein",
+                        String(parseInt(getValues("protein")) - 1)
+                      )
+                    }
+                  >
+                    <Icon name="minus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.textinput}
+                    label="Protein"
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={error?.message}
+                  />
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "protein",
+                        String(parseInt(getValues("protein")) + 1)
+                      )
+                    }
+                  >
+                    <Icon name="plus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                </View>
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="fiber"
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "20%",
+                  }}
+                >
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "fiber",
+                        String(parseInt(getValues("fiber")) - 1)
+                      )
+                    }
+                  >
+                    <Icon name="minus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.textinput}
+                    label="Fiber"
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={error?.message}
+                  />
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "fiber",
+                        String(parseInt(getValues("fiber")) + 1)
+                      )
+                    }
+                  >
+                    <Icon name="plus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                </View>
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="serving_g"
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "20%",
+                  }}
+                >
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "serving_g",
+                        String(parseInt(getValues("serving_g")) - 1)
+                      )
+                    }
+                  >
+                    <Icon name="minus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                  <TextInput
+                    style={styles.textinput}
+                    label="Serving (g)"
+                    onBlur={onBlur}
+                    keyboardType="numeric"
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={error?.message}
+                  />
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "serving_g",
+                        String(parseInt(getValues("serving_g")) + 1)
+                      )
+                    }
+                  >
+                    <Icon name="plus-thick" color={COLORS.lightGray} />
+                  </Pressable>
+                </View>
+              );
+            }}
+          />
+          <Controller
+            control={control}
+            name="serving_string"
             render={({ field: { onChange, value } }) => (
               <DropDownPicker
+                listMode="SCROLLVIEW"
+                placeholder="Select a serving type"
                 zIndex={1000}
-                searchable={true}
                 arrowIconStyle={{
                   padding: 0,
                 }}
                 showTickIcon={true}
                 containerStyle={{}}
-                dropDownContainerStyle={{}}
-                style={{}}
-                open={listOpen}
-                setOpen={() => setListOpen(!listOpen)}
-                items={PreListedFood}
+                dropDownContainerStyle={{
+                  backgroundColor: COLORS.lightGray,
+                  borderWidth: 0,
+                }}
+                style={{
+                  backgroundColor: COLORS.lightGray,
+                  borderColor: COLORS.lightGray,
+                }}
+                open={typeOpen}
+                setOpen={() => setTypeOpen(!typeOpen)}
+                items={Serving_types}
                 value={value}
                 setValue={(item) => onChange(item)}
               />
@@ -91,29 +504,9 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
               },
             }}
           />
-          <View style={styles.spacing} />
           <Controller
-            control={methods.control}
-            name="name"
-            render={({
-              field: { onChange, onBlur, value },
-              fieldState: { error },
-            }) => {
-              return (
-                <TextInput
-                  label="Food Name"
-                  onBlur={onBlur}
-                  value={value}
-                  onChangeText={onChange}
-                  errorMessage={error?.message}
-                />
-              );
-            }}
-          />
-          <View style={styles.spacing} />
-          <Controller
-            control={methods.control}
-            name="calories"
+            control={control}
+            name="serving_quant"
             render={({
               field: { onChange, onBlur, value },
               fieldState: { error },
@@ -123,61 +516,55 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                   style={{
                     flexDirection: "row",
                     alignItems: "flex-end",
-                    gap: 10,
-                    alignSelf: "flex-start",
-                    width: "30%",
+                    gap: 5,
+                    justifyContent: "center",
+                    width: "25%",
                   }}
                 >
-                  <Pressable style={styles.counterButtton}>
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "serving_quant",
+                        String(parseInt(getValues("serving_quant")) - 1)
+                      )
+                    }
+                  >
                     <Icon name="minus-thick" color={COLORS.lightGray} />
                   </Pressable>
                   <TextInput
-                    label="Calories"
+                    style={styles.textinput}
+                    label="Serving Quantity"
                     onBlur={onBlur}
+                    keyboardType="numeric"
                     value={value}
                     onChangeText={onChange}
                     errorMessage={error?.message}
                   />
-                  <Pressable style={styles.counterButtton}>
+                  <Pressable
+                    style={styles.counterButtton}
+                    onPress={() =>
+                      setValue(
+                        "serving_quant",
+                        String(parseInt(getValues("serving_quant")) + 1)
+                      )
+                    }
+                  >
                     <Icon name="plus-thick" color={COLORS.lightGray} />
                   </Pressable>
                 </View>
               );
             }}
           />
-          {/* 
-          <Text style={styles.label}>Should validate with zod</Text>
-
-          <Switch
-            value={shouldValidateWithZod}
-            onChange={(e) => setShouldValidateWithZod(e.nativeEvent.value)}
-          /> */}
-          <View style={styles.spacing} />
-
-          <Pressable
-            onPress={
-              shouldValidateWithZod
-                ? () => {
-                    const currFormValues = methods.getValues();
-                    const result = signUpFormSchema.safeParse(currFormValues);
-
-                    if (!result.success) {
-                      const formattedError = result.error.format();
-                      console.log(JSON.stringify(formattedError));
-                      Alert.alert(JSON.stringify(formattedError));
-                    } else {
-                      Alert.alert("Validation is successful");
-                    }
-                  }
-                : methods.handleSubmit(onSubmit, onError)
-            }
-            style={styles.button}
-          >
-            <Text style={{ color: COLORS.lightGray }}>Add Meal</Text>
-          </Pressable>
-        </FormProvider>
-      </View>
-    </SafeAreaView>
+        </View>
+        <View style={styles.spacing} />
+        <Pressable onPress={handleSubmit(onSubmit)} style={styles.button}>
+          <Text style={{ color: COLORS.lightGray, fontWeight: "bold" }}>
+            Add Meal
+          </Text>
+        </Pressable>
+      </ScrollView>
+    </View>
   );
 };
 
