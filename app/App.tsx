@@ -1,6 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ExerciseAdder, Home, MealAdder, PillAdder, Setup } from "./scenes";
 import { NavigationContainer } from "@react-navigation/native";
+import Home from "./scenes/Home";
+import MealAdder from "./screens/MealAdder";
+import PillAdder from "./screens/PillAdder";
+import Setup from "./scenes/Setup";
+import ExerciseAdder from "./screens/ExerciseAdder";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
