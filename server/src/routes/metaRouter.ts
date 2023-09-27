@@ -17,3 +17,10 @@ metaRouter.get("/summary", async (req, res) => {
     pills,
   });
 });
+
+metaRouter.get("/", async (req, res) => {
+  let startTime: Date = new Date();
+  const date = new Date();
+  date.setDate(date.getDate() - 7);
+  startTime = date;
+})
