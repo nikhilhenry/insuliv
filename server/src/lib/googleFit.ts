@@ -94,6 +94,67 @@ export const getSteps = async () => {
   }
 };
 
+export const getCalories = async () => {
+  let data = [];
+  try {
+    const result: any = await fitAPI.post("", {
+      aggregateBy: [
+        {
+          dataTypeName: "com.google.calories.expended",
+          dataSourceId:
+            "derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended",
+        },
+      ],
+      bucketByTime: {
+        durationMillis: 86400000,
+      },
+      startTimeMillis: startMillis,
+      endTimeMillis: endMillis,
+    });
+    const data = result.data.bucket;
+    const send_data = [];
+    for (const datapoint of data) {
+      send_data.push({
+        startTime: datapoint.startTimeMillis,
+        endTime: datapoint.endTimeMillis,
+        calories: Math.round(
+          datapoint["dataset"][0]["point"][0]["value"][0]["fpVal"]
+        ),
+      });
+    }
+
+    let categorizedData: any = [];
+    send_data.forEach((dataPoint: any) => {
+      // Convert startTime to a Date object
+      const startTimeMs = dataPoint.startTime;
+      const startDate = new Date(Number(startTimeMs));
+
+      // Get the date and day
+      const date = startDate.toISOString().split("T")[0];
+      const day = startDate.toLocaleDateString("en-US", { weekday: "long" });
+
+      // Add date and day to the data point
+      dataPoint.date = date;
+      dataPoint.day = day;
+
+      // Add the data point to the categorized object
+
+      categorizedData.push(dataPoint);
+    });
+
+    // Convert the categorized data to JSON
+    return categorizedData as Array<{
+      startTime: string;
+      endTime: string;
+      calories: Number;
+      date: string;
+      day: string;
+    }>;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const getBPM = async () => {
   try {
     const result = await fitAPI.post("", {
