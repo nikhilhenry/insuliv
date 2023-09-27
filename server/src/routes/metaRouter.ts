@@ -59,7 +59,7 @@ metaRouter.get("/weekly", async (req, res) => {
 
   calories?.forEach((item) => daily_cal.push(Number(item.calories)));
 
-  return_data.push({ category: "Calories", data: daily_cal });
+  return_data.push({ category: "Calories Burnt", data: daily_cal });
 
   date.setHours(0, 0, 0, 0);
   startTime = date;

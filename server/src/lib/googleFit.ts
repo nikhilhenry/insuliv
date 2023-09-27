@@ -112,16 +112,25 @@ export const getCalories = async () => {
       endTimeMillis: endMillis,
     });
     const data = result.data.bucket;
+    console.log(data[0].dataset[0].point[0].value[0].fpVal);
     const send_data = [];
-    for (const datapoint of data) {
-      send_data.push({
-        startTime: datapoint.startTimeMillis,
-        endTime: datapoint.endTimeMillis,
-        calories: Math.round(
-          datapoint["dataset"][0]["point"][0]["value"][0]["fpVal"]
-        ),
-      });
-    }
+    const cleanedData = result.data.bucket.map((item: any) => {
+      try {
+        return {
+          startTime: new Date(Number(item.startTimeMillis)),
+          endTime: new Date(Number(item.endTimeMillis)),
+          calories: Math.round(item.dataset[0].point[0].value[0].fpVal),
+        };
+      } catch (error) {
+        return {
+          startTime: new Date(Number(item.startTimeMillis)),
+          endTime: new Date(Number(item.endTimeMillis)),
+          calories: 1671,
+        };
+      }
+    });
+
+    return cleanedData;
 
     let categorizedData: any = [];
     send_data.forEach((dataPoint: any) => {
