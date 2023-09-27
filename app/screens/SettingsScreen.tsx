@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Button, FlatList } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../App";
+import type { RootStackParamList } from "../scenes/Home";
 
 const SettingsScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   navigation,
