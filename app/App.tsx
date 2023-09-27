@@ -7,7 +7,12 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Setup"
-        screenOptions={{ headerShown: false }}
+        screenOptions={({ route }) => {
+          return {
+            headerShown:
+              route.name == "Setup" || route.name == "Home" ? false : true,
+          };
+        }}
       >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Setup" component={Setup} />
