@@ -35,3 +35,18 @@ imageRouter.post("/upload", upload.single("file"), async (req, res) => {
     .status(200)
     .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
 });
+
+imageRouter.post("/upload/pdf", upload.single("file"), async (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+  const fileName = nanoid(4) + ".pdf";
+  // load the image from the file system in the uploads folder
+  const id = await photos.put(fileName, {
+    data: file.buffer,
+  });
+  return res
+    .status(200)
+    .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
+});
