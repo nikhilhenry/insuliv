@@ -48,4 +48,11 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
   );
 };
 
+export type HomeTabParamList = {
+  HomeScreen: undefined;
+  ReportScreen: undefined;
+  FoodScreen: undefined;
+  Settings: undefined;
+};
+
 export default Home;
