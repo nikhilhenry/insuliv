@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "../App";
 import { COLORS, SIZES } from "../constants";
+import { InfoCardContainer, ActivityLogger } from "../components";
 import Icon from "react-native-vector-icons/Fontisto";
+import { HomeTabParamList } from "../scenes/Home";
 
-const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
+const HomeScreen: React.FC<NativeStackScreenProps<HomeTabParamList>> = ({
   navigation,
 }) => {
   return (
@@ -24,12 +25,14 @@ const HomeScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
             fontWeight: "bold",
           }}
         >
-          Hi Abhinav 👋,
+          Hey User 👋,
         </Text>
         <TouchableOpacity>
           <Icon name="bell" size={27} color={COLORS.IconColor} />
         </TouchableOpacity>
       </View>
+      <InfoCardContainer />
+      <ActivityLogger navigation={navigation} />
       <StatusBar style="auto" />
     </View>
   );
