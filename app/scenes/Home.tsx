@@ -5,6 +5,7 @@ import { COLORS } from "../constants";
 import { View, Text } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
+import Food from "./Food";
 
 const Tab = createBottomTabNavigator();
 const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
@@ -29,7 +30,6 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
           return (
             <View>
               <Icon name={iconName} size={30} color={COLORS.IconColor} />
-              <Text className="text-sky-500">Home</Text>
             </View>
           );
         },
@@ -44,6 +44,7 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
       })}
     >
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
+      <Tab.Screen name="FoodScreen" component={Food} />
     </Tab.Navigator>
   );
 };
