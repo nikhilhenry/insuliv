@@ -1,7 +1,20 @@
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { View, StyleSheet, Text, Pressable, Alert } from "react-native";
 import { COLORS } from "../constants";
 const PillCard = (pill: any) => {
   const date = new Date(pill.pill.createdAt).toDateString();
+  const pillname = pill.pill.name;
+  const changepill = async (pillname: string) => {
+    await fetch("https://apollo-web-th7i.onrender.com/api/pill/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: pillname,
+      }),
+    });
+    Alert.alert("Pill Taken! ");
+  };
   return (
     <View style={styles.container}>
       <View
@@ -33,6 +46,9 @@ const PillCard = (pill: any) => {
             padding: 7,
             justifyContent: "center",
             alignItems: "center",
+          }}
+          onPress={() => {
+            changepill(pillname);
           }}
         >
           <Text style={{ color: COLORS.backGray }}>Take Pill</Text>

@@ -105,8 +105,12 @@ export default function ImagePickerExample() {
       )}
       {link && (
         <View>
-          <Button onPress={ocrProcess} title="OCR Processs" />
-          <Text>{link}</Text>
+          <Button
+            onPress={ocrProcess}
+            title="OCR Process"
+            color={COLORS.dark}
+          />
+          <Text style={{ color: COLORS.backGray }}>{link}</Text>
         </View>
       )}
     </View>
