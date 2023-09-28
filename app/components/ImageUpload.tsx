@@ -23,7 +23,7 @@ export default function ImagePickerExample() {
 
   const handleUploadPhoto = () => {
     console.log("going toupload");
-    fetch("http://localhost:3000/api/image/upload/string", {
+    fetch("https://apollo-web-th7i.onrender.com/api/image/upload/string", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -42,7 +42,7 @@ export default function ImagePickerExample() {
 
   const handlePills = (pills: any) => {
     console.log("pills", pills);
-    fetch("http://localhost:3000/api/pill/create", {
+    fetch("https://apollo-web-th7i.onrender.com/api/pill/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
