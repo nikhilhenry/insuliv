@@ -45,6 +45,12 @@ model PillActivity {
   Category  String
 }
 
+model Pill {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+}
+
 model Post {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())

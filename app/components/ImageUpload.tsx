@@ -40,10 +40,40 @@ export default function ImagePickerExample() {
       });
   };
 
+  const handlePills = (pills: any) => {
+    console.log("pills", pills);
+    fetch("http://localhost:3000/api/pill/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pills: pills,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((err) => console.log(err))
+      .then((val) => {
+        console.log(val);
+      });
+  };
+
   const ocrProcess = () => {
-    fetch(
-      "https://insuliv-backend.onrender.com/ocr?url=" + encodeURI(link)
-    ).then((response) => console.log(response));
+    console.log("handling ocr");
+    fetch("https://insuliv-backend.onrender.com/ocr?url=" + link)
+      .then((response) => response.json())
+      .catch((err) => console.log(err))
+      .then((res) => {
+        res = JSON.parse(res);
+        console.log(res);
+        const pills = [
+          { name: res.medication_name1 },
+          { name: res.medication_name2 },
+        ];
+        handlePills(pills);
+      })
+      .catch((err) => console.log(err));
   };
 
   const pickImage = async () => {
