@@ -1,20 +1,19 @@
-import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { COLORS, SIZES } from "../constants";
 import { InfoCardContainer, ActivityLogger } from "../components";
 import Icon from "react-native-vector-icons/Fontisto";
 import { HomeTabParamList } from "../scenes/Home";
-
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import { useEffect } from "react";
-
+import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import IconF from "react-native-vector-icons/FontAwesome5";
 const queryClient = new QueryClient();
 
 const HomeScreen: React.FC<NativeStackScreenProps<HomeTabParamList>> = ({
@@ -30,8 +29,21 @@ const HomeScreen: React.FC<NativeStackScreenProps<HomeTabParamList>> = ({
             paddingVertical: 40,
           }}
         >
-          <Text className="text-black font-bold text-3xl">Insuliv</Text>
-          <TouchableOpacity>
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <IconF
+              name="hands-helping"
+              color={COLORS.secondaryBlueD}
+              size={30}
+            />
+            <Text className="font-bold text-3xl" style={{ color: COLORS.dark }}>
+              Insuliv
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.push("NotificationAdder");
+            }}
+          >
             <Icon name="bell" size={27} color={COLORS.IconColor} />
           </TouchableOpacity>
         </View>

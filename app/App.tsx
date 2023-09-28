@@ -4,6 +4,7 @@ import { Home, SetupScreen, Setup1Screen, Setup2Screen } from "./scenes";
 import MealAdder from "./screens/MealAdder";
 import PillAdder from "./screens/PillAdder";
 import ExerciseAdder from "./screens/ExerciseAdder";
+import NotificationAdder from "./screens/NotificationAdder";
 import { COLORS } from "./constants";
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function App() {
         <Stack.Screen name="Setup1" component={Setup1Screen} />
         <Stack.Screen name="Setup2" component={Setup2Screen} />
         <Stack.Screen name="MealAdder" component={MealAdder} />
+        <Stack.Screen name="NotificationAdder" component={NotificationAdder} />
         <Stack.Screen name="ExerciseAdder" component={ExerciseAdder} />
         <Stack.Screen name="PillAdder" component={PillAdder} />
       </Stack.Navigator>
@@ -47,4 +49,5 @@ export type RootStackParamList = {
   PillAdder: undefined;
   Setup1: undefined;
   Setup2: undefined;
+  NotificationAdder: undefined;
 };

@@ -63,6 +63,39 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
       <View style={styles.spacing} />
       <Controller
         control={control}
+        name="Gender"
+        render={({ field: { onChange, value } }) => (
+          <DropDownPicker
+            arrowIconStyle={{
+              padding: 0,
+            }}
+            showTickIcon={true}
+            containerStyle={{}}
+            dropDownContainerStyle={{
+              backgroundColor: COLORS.lightGray,
+              borderWidth: 0,
+            }}
+            style={{
+              backgroundColor: COLORS.lightGray,
+              borderColor: COLORS.lightGray,
+            }}
+            open={listOpen}
+            setOpen={() => setListOpen(!listOpen)}
+            value={value}
+            items={Gender_types}
+            setValue={(item) => onChange(item)}
+          />
+        )}
+        rules={{
+          required: {
+            value: false,
+            message: "Please fill out all required fields.",
+          },
+        }}
+      />
+      <View style={styles.spacing} />
+      <Controller
+        control={control}
         name="Age"
         render={({
           field: { onChange, onBlur, value },
@@ -189,39 +222,7 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
           );
         }}
       />
-      <View style={styles.spacing} />
-      <Controller
-        control={control}
-        name="Gender"
-        render={({ field: { onChange, value } }) => (
-          <DropDownPicker
-            arrowIconStyle={{
-              padding: 0,
-            }}
-            showTickIcon={true}
-            containerStyle={{}}
-            dropDownContainerStyle={{
-              backgroundColor: COLORS.lightGray,
-              borderWidth: 0,
-            }}
-            style={{
-              backgroundColor: COLORS.lightGray,
-              borderColor: COLORS.lightGray,
-            }}
-            open={listOpen}
-            setOpen={() => setListOpen(!listOpen)}
-            value={value}
-            items={Gender_types}
-            setValue={(item) => onChange(item)}
-          />
-        )}
-        rules={{
-          required: {
-            value: false,
-            message: "Please fill out all required fields.",
-          },
-        }}
-      />
+
       <Pressable
         onPress={() => {
           navigation.push("Setup2");

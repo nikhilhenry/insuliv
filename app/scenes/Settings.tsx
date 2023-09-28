@@ -5,7 +5,7 @@ import ImagePickerExample from "../components/ImageUpload";
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Welcome to Settings</Text>
+      <Text>Settings</Text>
       <ImagePickerExample />
     </View>
   );

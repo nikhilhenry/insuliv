@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, View, ActivityIndicator } from "react-native";
 import ActivityCard from "../components/ActivityCard/ActivityCard";
+import React, { useEffect } from "react";
 const ActivityList: React.FC<{ range: string }> = ({ range }) => {
   const getActivities = async () => {
     try {
@@ -41,7 +42,7 @@ const ActivityList: React.FC<{ range: string }> = ({ range }) => {
           keyExtractor={(item) => item.id}
         />
       ) : (
-        <Text className="text-center">Loading</Text>
+        <ActivityIndicator />
       )}
     </>
   );

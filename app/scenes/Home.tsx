@@ -48,7 +48,7 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="FoodScreen" component={Food} />
       <Tab.Screen name="ReportScreen" component={Report} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="SettingsScreen" component={Settings} />
     </Tab.Navigator>
   );
 };
@@ -58,6 +58,7 @@ export type HomeTabParamList = {
   ReportScreen: undefined;
   FoodScreen: undefined;
   Settings: undefined;
+  NotificationAdder: undefined;
 };
 
 export default Home;

@@ -1,21 +1,21 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 
-import React, { useState, useEffect } from "react";
-import { Button, Image, View, Text, Platform } from "react-native";
+import React, { useState } from "react";
+import { Button, Image, View, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const createFormData = (photo: any) => {
-  const data = new FormData();
+// const createFormData = (photo: any) => {
+//   const data = new FormData();
 
-  data.append("file", {
-    nae: photo.fileName,
-    type: photo.type,
-    uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
-  });
+//   data.append("file", {
+//     nae: photo.fileName,
+//     type: photo.type,
+//     uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
+//   });
 
-  return data;
-};
+//   return data;
+// };
 
 export default function ImagePickerExample() {
   const [image, setImage] = useState(null);

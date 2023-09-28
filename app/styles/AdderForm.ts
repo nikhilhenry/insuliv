@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 10,
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.secondaryBlueD,
     justifyContent: "center",
     marginBottom: 5,
   },
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     elevation: 2,
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.secondaryBlueD,
   },
   root: {
     flex: 1,

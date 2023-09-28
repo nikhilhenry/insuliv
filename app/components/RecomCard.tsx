@@ -23,12 +23,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     borderRadius: 10,
-    padding: 30,
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
+    paddingHorizontal: 30,
+    marginVertical: 10,
   },
 });
 

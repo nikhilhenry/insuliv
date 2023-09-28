@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Button, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../App";
 import React, { useEffect } from "react";
@@ -25,7 +32,7 @@ const PillAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
           return <PillCard pill={item} key={item.id} />;
         })
       ) : (
-        <Text className="text-center">Loading</Text>
+        <ActivityIndicator />
       )}
     </View>
   );
@@ -34,9 +41,6 @@ const PillAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   item: {
     padding: 10,

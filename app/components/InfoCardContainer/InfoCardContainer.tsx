@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { COLORS, SIZES } from "../../constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import IconF from "react-native-vector-icons/Fontisto";
@@ -57,7 +57,7 @@ const InfoCardContainer = () => {
           />
         </>
       ) : (
-        <Text>Loading</Text>
+        <ActivityIndicator />
       )}
     </View>
   );

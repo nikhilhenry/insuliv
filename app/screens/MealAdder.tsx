@@ -84,6 +84,7 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
       };
       handlefood(food);
     }
+    navigation.navigate("Home");
   };
   const fillform = (foodname: string | undefined) => {
     if (foodname) {
@@ -575,7 +576,13 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
         </View>
         <View style={styles.spacing} />
         <Pressable onPress={handleSubmit(onSubmit)} style={styles.button}>
-          <Text style={{ color: COLORS.lightGray, fontWeight: "bold" }}>
+          <Text
+            style={{
+              color: COLORS.lightGray,
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+          >
             Add Meal
           </Text>
         </Pressable>

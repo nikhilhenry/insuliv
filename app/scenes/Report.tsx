@@ -5,25 +5,36 @@ import {
   Button,
   FlatList,
   Linking,
+  Pressable,
 } from "react-native";
+import { COLORS } from "../constants";
 
 const ReportScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Welcome to ReportScreen</Text>
-      <Button
+      <Pressable
+        style={{
+          backgroundColor: COLORS.secondaryBlueD,
+          padding: 15,
+          borderRadius: 8,
+        }}
         onPress={() => {
           loadInBrowser();
         }}
-        title="Generate Report"
-      />
+      >
+        <Text
+          style={{ fontSize: 18, color: COLORS.backGray, fontWeight: "bold" }}
+        >
+          Generate Report
+        </Text>
+      </Pressable>
     </View>
   );
 };
 
 const loadInBrowser = () => {
-  Linking.openURL("https://www.africau.edu/images/default/sample.pdf").catch(
-    (err) => console.error("Couldn't load page", err)
+  Linking.openURL("https://insuliv-testimg2.onrender.com/").catch((err) =>
+    console.error("Couldn't load page", err)
   );
 };
 

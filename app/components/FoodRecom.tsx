@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import {
+  FlatList,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import RecomCard from "../components/RecomCard";
 
 const FoodRecom = () => {
@@ -29,13 +35,16 @@ const FoodRecom = () => {
 
   return (
     <>
-      {data ? (
-        data.map((item) => {
-          <RecomCard res={item} />;
-        })
-      ) : (
-        <Text className="text-center">Loading</Text>
-      )}
+      <ScrollView style={{ flex: 1 }}>
+        {data ? (
+          data.map((item) => {
+            console.log(item);
+            return <RecomCard res={item} key={item} />;
+          })
+        ) : (
+          <ActivityIndicator />
+        )}
+      </ScrollView>
     </>
   );
 };
