@@ -25,6 +25,21 @@ const Serving_types = [
   { label: "Serving", value: "Serving" },
 ];
 
+const handlefood = (food: any) => {
+  fetch("https://apollo-web-th7i.onrender.com/api/food/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(food),
+  })
+    .then((response) => response.json())
+    .catch((err) => console.log(err))
+    .then((val) => {
+      console.log(val);
+    });
+};
 const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   navigation,
 }) => {
@@ -45,7 +60,30 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
     { label: "SampleFood1", value: "SampleFood1" },
   ]);
   const onSubmit = () => {
-    console.log("Submitted successfully");
+    let foodname = getValues("foodName");
+    let calories = getValues("calories");
+    let carbs = getValues("carbs");
+    let fats = getValues("fats");
+    let protein = getValues("protein");
+    let fiber = getValues("fiber");
+    let serving_g = getValues("serving_g");
+    let serving_quant = getValues("serving_quant");
+    let serving_string = getValues("serving_string");
+    if (foodname && calories && carbs && fats && protein && fiber) {
+      let food = {
+        Name: foodname,
+        Calories: calories,
+        Carbs: carbs,
+        Fats: fats,
+        Protein: protein,
+        Fiber: fiber,
+        Serving_g: serving_g,
+        Serving_quant: serving_quant,
+        Serving_string: serving_string,
+        Category: "fun",
+      };
+      handlefood(food);
+    }
   };
   const fillform = (foodname: string | undefined) => {
     if (foodname) {
@@ -91,7 +129,6 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   return (
     <View style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.root}>
-        <View style={styles.spacing} />
         <Controller
           control={control}
           name="preListedFood"
@@ -128,26 +165,6 @@ const MealAdder: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
               value: false,
               message: "Please fill out all required fields.",
             },
-          }}
-        />
-        <View style={styles.spacing} />
-        <Controller
-          control={control}
-          name="foodName"
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => {
-            return (
-              <TextInput
-                style={styles.textinput}
-                label="Food Name"
-                onBlur={onBlur}
-                value={value}
-                onChangeText={onChange}
-                errorMessage={error?.message}
-              />
-            );
           }}
         />
         <View style={styles.spacing} />
