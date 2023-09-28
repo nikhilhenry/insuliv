@@ -29,7 +29,7 @@ pillRouter.get("/items", async (req, res) => {
 pillRouter.post("/", async (req, res, next) => {
   try {
     const pill = await prisma.pillActivity.create({
-      data: req.body,
+      data: { Name: req.body.name, Quantity: 1, Category: "essential" },
     });
     res.json(pill);
   } catch (error) {
