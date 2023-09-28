@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, Button, FlatList } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import ImagePickerExample from "../components/ImageUpload";
 
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Welcome to Settings</Text>
+      <ImagePickerExample />
     </View>
   );
 };

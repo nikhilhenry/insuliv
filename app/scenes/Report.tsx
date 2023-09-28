@@ -1,11 +1,29 @@
-import { View, Text, StyleSheet, Button, FlatList } from "react-native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  FlatList,
+  Linking,
+} from "react-native";
 
 const ReportScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Welcome to ReportScreen</Text>
+      <Button
+        onPress={() => {
+          loadInBrowser();
+        }}
+        title="Generate Report"
+      />
     </View>
+  );
+};
+
+const loadInBrowser = () => {
+  Linking.openURL("https://www.africau.edu/images/default/sample.pdf").catch(
+    (err) => console.error("Couldn't load page", err)
   );
 };
 

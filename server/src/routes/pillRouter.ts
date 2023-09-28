@@ -9,6 +9,23 @@ pillRouter.get("/", async (req, res, next) => {
   return res.json(pillLog);
 });
 
+pillRouter.post("/create", (req, res) => {
+  console.log(req.body.pills);
+  req.body.pills.forEach(async (pill: any) => {
+    await prisma.pill.create({ data: { name: pill.name as string } });
+  });
+  res.json({ message: "Pills created" });
+});
+
+pillRouter.get("/items", async (req, res) => {
+  try {
+    return res.send(await prisma.pill.findMany());
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error retrieving pills" });
+  }
+});
+
 pillRouter.post("/", async (req, res, next) => {
   try {
     const pill = await prisma.pillActivity.create({
