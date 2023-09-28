@@ -32,8 +32,11 @@ const ReportScreen = () => {
   );
 };
 
-const loadInBrowser = () => {
-  Linking.openURL("https://insuliv-testimg2.onrender.com/").catch((err) =>
+const loadInBrowser = async () => {
+  const res = await fetch("https://insuliv-testimg2.onrender.com/report");
+  console.log(res);
+  const result = await res.json();
+  Linking.openURL(result.url).catch((err) =>
     console.error("Couldn't load page", err)
   );
 };

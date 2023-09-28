@@ -25,7 +25,7 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
           } else if (route.name === "ReportScreen") {
             iconName = focused ? "document-text" : "document-text-outline";
           } else if (route.name === "SettingsScreen") {
-            iconName = focused ? "settings" : "settings-outline";
+            iconName = focused ? "camera" : "camera-outline";
           } else {
             iconName = "settings-outline";
           }

@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 import React, { useState } from "react";
-import { Button, Image, View, Text } from "react-native";
+import { Button, Image, View, Text, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-
+import { COLORS } from "../constants";
 // const createFormData = (photo: any) => {
 //   const data = new FormData();
 
@@ -93,7 +93,14 @@ export default function ImagePickerExample() {
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      <Pressable
+        onPress={pickImage}
+        style={{ backgroundColor: COLORS.dark, padding: 10, borderRadius: 8 }}
+      >
+        <Text style={{ color: COLORS.backGray }}>
+          Pick an image from camera roll
+        </Text>
+      </Pressable>
       {image && (
         <View>
           <Image
@@ -105,12 +112,17 @@ export default function ImagePickerExample() {
       )}
       {link && (
         <View>
-          <Button
+          <Pressable
             onPress={ocrProcess}
-            title="OCR Process"
-            color={COLORS.dark}
-          />
-          <Text style={{ color: COLORS.backGray }}>{link}</Text>
+            style={{
+              backgroundColor: COLORS.dark,
+              padding: 10,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ color: COLORS.backGray }}>OCR Process</Text>
+          </Pressable>
+          <Text style={{ color: COLORS.dark }}>{link}</Text>
         </View>
       )}
     </View>
