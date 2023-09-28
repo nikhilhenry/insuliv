@@ -27,7 +27,7 @@ const Home: React.FC<NativeStackScreenProps<RootStackParamList>> = () => {
           } else if (route.name === "SettingsScreen") {
             iconName = focused ? "settings" : "settings-outline";
           } else {
-            iconName = "ios-list";
+            iconName = "settings-outline";
           }
           return (
             <View>

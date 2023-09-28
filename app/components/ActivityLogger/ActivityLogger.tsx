@@ -43,12 +43,11 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
 
   return (
     <View style={{ flex: 1, gap: 10 }}>
-      <Text style={{ fontWeight: "bold", color: COLORS.dark }}>
-        Activity Log
-      </Text>
       <View style={styles.container}>
         <View style={styles.topheader}>
           <DropDownPicker
+            dropDownDirection="TOP"
+            zIndex={10000000}
             arrowIconStyle={{
               marginRight: 35,
               padding: 0,
@@ -83,12 +82,14 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
             }}
           />
           <DropDownPicker
+            dropDownDirection="TOP"
             ArrowUpIconComponent={({ style }) => (
               <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
             )}
             ArrowDownIconComponent={({ style }) => (
               <Icon name="plus-circle" size={15} color={COLORS.IconColor} />
             )}
+            zIndex={9000}
             showArrowIcon={true}
             placeholder="Add Activity"
             showTickIcon={false}

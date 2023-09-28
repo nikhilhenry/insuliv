@@ -1,10 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Home from "./scenes/Home";
+import { Home, SetupScreen, Setup1Screen, Setup2Screen } from "./scenes";
 import MealAdder from "./screens/MealAdder";
 import PillAdder from "./screens/PillAdder";
-import Setup from "./scenes/Setup";
 import ExerciseAdder from "./screens/ExerciseAdder";
+import { COLORS } from "./constants";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -15,11 +16,21 @@ export default function App() {
           return {
             headerShown:
               route.name == "Setup" || route.name == "Home" ? false : true,
+            headerTintColor: COLORS.secondaryBlueD,
+            headerTitleStyle: {
+              color: COLORS.backGray,
+              fontWeight: "bold",
+            },
+            headerStyle: {
+              backgroundColor: COLORS.backGray,
+            },
           };
         }}
       >
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Setup" component={Setup} />
+        <Stack.Screen name="Setup" component={SetupScreen} />
+        <Stack.Screen name="Setup1" component={Setup1Screen} />
+        <Stack.Screen name="Setup2" component={Setup2Screen} />
         <Stack.Screen name="MealAdder" component={MealAdder} />
         <Stack.Screen name="ExerciseAdder" component={ExerciseAdder} />
         <Stack.Screen name="PillAdder" component={PillAdder} />
@@ -34,4 +45,6 @@ export type RootStackParamList = {
   MealAdder: undefined;
   ExerciseAdder: undefined;
   PillAdder: undefined;
+  Setup1: undefined;
+  Setup2: undefined;
 };
