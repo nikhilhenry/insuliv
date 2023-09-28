@@ -4,6 +4,7 @@ import { Home, SetupScreen, Setup1Screen, Setup2Screen } from "./scenes";
 import MealAdder from "./screens/MealAdder";
 import PillAdder from "./screens/PillAdder";
 import ExerciseAdder from "./screens/ExerciseAdder";
+import { COLORS } from "./constants";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -15,6 +16,14 @@ export default function App() {
           return {
             headerShown:
               route.name == "Setup" || route.name == "Home" ? false : true,
+            headerTintColor: COLORS.secondaryBlueD,
+            headerTitleStyle: {
+              color: COLORS.backGray,
+              fontWeight: "bold",
+            },
+            headerStyle: {
+              backgroundColor: COLORS.backGray,
+            },
           };
         }}
       >

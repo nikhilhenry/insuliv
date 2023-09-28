@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.backGray,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 50,
     paddingHorizontal: 30,
   },
   textinput: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 10,
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.secondaryBlueD,
     justifyContent: "center",
     marginBottom: 5,
   },

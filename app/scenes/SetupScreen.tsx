@@ -9,14 +9,12 @@ const SetupScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 20, color: COLORS.lightGray }}>
-        Live the sweet life with
-      </Text>
       <View
         style={{
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          gap: 15,
         }}
       >
         <Icon name="hands-helping" color={COLORS.lightGray} size={50} />
@@ -28,12 +26,21 @@ const SetupScreen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
         }}
         style={{
           backgroundColor: COLORS.lightGray,
-          padding: 15,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
           borderRadius: 5,
-          marginTop: 20,
+          marginTop: 40,
         }}
       >
-        <Text style={{ color: COLORS.dark, fontSize: 20 }}>Get Started</Text>
+        <Text
+          style={{
+            color: COLORS.secondaryBlueD,
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Get Started
+        </Text>
       </Pressable>
     </View>
   );

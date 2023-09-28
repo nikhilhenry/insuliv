@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { RootStackParamList } from "../App";
 import { COLORS } from "../constants";
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -31,6 +31,7 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   const Gender_types = [
     { label: "Male", value: "M" },
     { label: "Female", value: "F" },
+    { label: "Others", value: "O" },
   ];
   const Type_of_Diabetes = [
     { label: "Type-1", value: "1" },
@@ -49,7 +50,8 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
           return (
             <TextInput
               style={styles.textinput}
-              label="Name"
+              placeholder="Enter your full name"
+              label="Full Name"
               onBlur={onBlur}
               value={value}
               onChangeText={onChange}
@@ -80,7 +82,7 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                 style={styles.counterButtton}
                 onPress={() => setValue("Age", getValues("Age") - 1)}
               >
-                <IconM name="minus-thick" color={COLORS.lightGray} />
+                <IconM name="minus-thick" size={15} color={COLORS.lightGray} />
               </Pressable>
               <TextInput
                 style={styles.textinput}
@@ -95,7 +97,7 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                 style={styles.counterButtton}
                 onPress={() => setValue("Age", getValues("Age") + 1)}
               >
-                <IconM name="plus-thick" color={COLORS.lightGray} />
+                <IconM name="plus-thick" size={15} color={COLORS.lightGray} />
               </Pressable>
             </View>
           );
@@ -123,11 +125,11 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                 style={styles.counterButtton}
                 onPress={() => setValue("Weight", getValues("Weight") - 1)}
               >
-                <IconM name="minus-thick" color={COLORS.lightGray} />
+                <IconM name="minus-thick" size={15} color={COLORS.lightGray} />
               </Pressable>
               <TextInput
                 style={styles.textinput}
-                label="Weight"
+                label="Weight (kg)"
                 onBlur={onBlur}
                 keyboardType="numeric"
                 value={value.toString()}
@@ -138,7 +140,7 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                 style={styles.counterButtton}
                 onPress={() => setValue("Weight", getValues("Weight") + 1)}
               >
-                <IconM name="plus-thick" color={COLORS.lightGray} />
+                <IconM name="plus-thick" size={15} color={COLORS.lightGray} />
               </Pressable>
             </View>
           );
@@ -166,11 +168,11 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                 style={styles.counterButtton}
                 onPress={() => setValue("Height", getValues("Height") - 1)}
               >
-                <IconM name="minus-thick" color={COLORS.lightGray} />
+                <IconM name="minus-thick" size={15} color={COLORS.lightGray} />
               </Pressable>
               <TextInput
                 style={styles.textinput}
-                label="Height"
+                label="Height (cm)"
                 onBlur={onBlur}
                 keyboardType="numeric"
                 value={value.toString()}
@@ -181,7 +183,7 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
                 style={styles.counterButtton}
                 onPress={() => setValue("Height", getValues("Height") + 1)}
               >
-                <IconM name="plus-thick" color={COLORS.lightGray} />
+                <IconM name="plus-thick" size={15} color={COLORS.lightGray} />
               </Pressable>
             </View>
           );
@@ -225,14 +227,16 @@ const Setup1Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
           navigation.push("Setup2");
         }}
         style={{
-          backgroundColor: COLORS.lightGray,
+          backgroundColor: COLORS.secondaryBlueD,
           padding: 15,
           borderRadius: 5,
-          marginTop: 20,
+          marginTop: 50,
         }}
       >
-        <Text style={{ color: COLORS.dark, fontSize: 20 }}>
-          Next <Icon name="chevron-right" size={18} color={COLORS.dark} />
+        <Text
+          style={{ color: COLORS.lightGray, fontSize: 15, fontWeight: "bold" }}
+        >
+          Next <Icon name="chevron-right" size={15} color={COLORS.lightGray} />
         </Text>
       </Pressable>
     </View>

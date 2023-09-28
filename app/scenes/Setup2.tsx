@@ -8,8 +8,16 @@ const Setup2Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
   navigation,
 }) => {
   return (
-    <View style={styles.container}>
-      <Text style={{ fontSize: 30, marginTop: -100 }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.backGray,
+        alignItems: "center",
+        paddingHorizontal: 30,
+        marginTop: 200,
+      }}
+    >
+      <Text style={{ fontSize: 25, color: COLORS.darkL }}>
         Select the type of diabetes
       </Text>
       <Pressable
@@ -18,12 +26,13 @@ const Setup2Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
         }}
         style={{
           backgroundColor: COLORS.secondaryBlueD,
-          padding: 15,
+          padding: 30,
+          width: "100%",
           borderRadius: 5,
           marginTop: 20,
         }}
       >
-        <Text style={{ color: COLORS.backGray, fontSize: 20 }}>
+        <Text style={{ color: COLORS.backGray, fontSize: 30 }}>
           Type-1 <Icon name="chevron-right" size={18} color={COLORS.backGray} />
         </Text>
       </Pressable>
@@ -33,12 +42,13 @@ const Setup2Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
         }}
         style={{
           backgroundColor: COLORS.secondaryRedD,
-          padding: 15,
+          padding: 30,
+          width: "100%",
           borderRadius: 5,
           marginTop: 20,
         }}
       >
-        <Text style={{ color: COLORS.backGray, fontSize: 20 }}>
+        <Text style={{ color: COLORS.backGray, fontSize: 30 }}>
           Type-2 <Icon name="chevron-right" size={18} color={COLORS.backGray} />
         </Text>
       </Pressable>
