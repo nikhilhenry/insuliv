@@ -9,7 +9,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import ActivityList from "../ActivityList";
 const ActivityLogger = ({ navigation }: { navigation: any }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("today");
+  const [value, setValue] = useState("week");
   const [items, setItems] = useState([
     { label: "today", value: "today" },
     { label: "week", value: "week" },
@@ -121,7 +121,7 @@ const ActivityLogger = ({ navigation }: { navigation: any }) => {
           />
         </View>
         <View style={styles.bottomholder}>
-          <ActivityList />
+          <ActivityList range={value} />
         </View>
       </View>
     </View>

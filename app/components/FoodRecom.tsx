@@ -3,7 +3,7 @@ import { FlatList, Text, View } from "react-native";
 import RecomCard from "../components/RecomCard";
 
 const FoodRecom = () => {
-  const [data, setData] = useState<string>("");
+  const [data, setData] = useState([]);
   useEffect(() => {
     apifetcher();
   }, []);
@@ -19,7 +19,7 @@ const FoodRecom = () => {
         )}}`
       );
       const fetchdata = await res.json();
-      console.log;
+      console.log(fetchdata.response[0]);
       setData(fetchdata.response);
       return data;
     } catch (error) {
@@ -30,7 +30,9 @@ const FoodRecom = () => {
   return (
     <>
       {data ? (
-        <RecomCard res={data} />
+        data.map((item) => {
+          <RecomCard res={item} />;
+        })
       ) : (
         <Text className="text-center">Loading</Text>
       )}

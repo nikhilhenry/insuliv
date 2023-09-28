@@ -14,7 +14,7 @@ const Setup2Screen: React.FC<NativeStackScreenProps<RootStackParamList>> = ({
         backgroundColor: COLORS.backGray,
         alignItems: "center",
         paddingHorizontal: 30,
-        marginTop: 200,
+        marginTop: 160,
       }}
     >
       <Text style={{ fontSize: 25, color: COLORS.darkL }}>
