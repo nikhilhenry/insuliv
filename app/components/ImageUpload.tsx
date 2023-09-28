@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform } from "react-native";
+import { Button, Image, View, Text, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 const createFormData = (photo: any) => {
@@ -19,6 +19,7 @@ const createFormData = (photo: any) => {
 
 export default function ImagePickerExample() {
   const [image, setImage] = useState(null);
+  const [link, setLink] = useState("");
 
   const handleUploadPhoto = () => {
     console.log("going toupload");
@@ -35,7 +36,14 @@ export default function ImagePickerExample() {
       .then((response) => response.json())
       .then((val) => {
         console.log(val);
+        setLink(val.img_url);
       });
+  };
+
+  const ocrProcess = () => {
+    fetch(
+      "https://insuliv-backend.onrender.com/ocr?url=" + encodeURI(link)
+    ).then((response) => console.log(response));
   };
 
   const pickImage = async () => {
@@ -63,6 +71,12 @@ export default function ImagePickerExample() {
             style={{ width: 200, height: 200 }}
           />
           <Button onPress={handleUploadPhoto} title="Upload" />
+        </View>
+      )}
+      {link && (
+        <View>
+          <Button onPress={ocrProcess} title="OCR Processs" />
+          <Text>{link}</Text>
         </View>
       )}
     </View>

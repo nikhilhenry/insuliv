@@ -31,7 +31,9 @@ imageRouter.post("/upload/string", async (req, res) => {
     console.log("finished putting");
     return res
       .status(200)
-      .send({ img_url: `${process.env.HOST_NAME}/api/image/` + id });
+      .send({
+        img_url: "https://apollo-web-th7i.onrender.com" + "/api/image/" + id,
+      });
   } catch (error) {
     console.log(error);
     return res.send({ message: "failed" });
